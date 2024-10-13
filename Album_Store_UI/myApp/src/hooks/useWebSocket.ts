@@ -1,57 +1,52 @@
 import { useEffect, useState } from 'react';
-import SockJS from 'sockjs-client';
-import { Client } from '@stomp/stompjs';
+import * as signalR from '@microsoft/signalr';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const useWebSocket = (url: string, token?: string) => {
-  const [client, setClient] = useState<Client | null>(null);
+  const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
 
   useEffect(() => {
-    const stompClient = new Client({
-      // SockJS expects `http` or `https`
-      webSocketFactory: () => new SockJS(url),
-      connectHeaders: token ? { Authorization: `Bearer ${token}` } : {},
-      reconnectDelay: 5000, // Reconnect after 5 seconds if connection drops
-      heartbeatIncoming: 0, // Disable incoming heartbeats
-      heartbeatOutgoing: 10000, // Send a heartbeat every 10 seconds
-      debug: (str) => {
-        console.log(`STOMP: ${str}`);
-      },
-    });
+    // Create a new SignalR Hub connection
+    const hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(url, {
+        accessTokenFactory: () => token || '', // Provide the token for authentication
+      })
+      .withAutomaticReconnect([0, 2000, 10000, 30000]) // Reconnect logic: try immediately, after 2s, 10s, 30s
+      .configureLogging(signalR.LogLevel.Information) // Log information to the console
+      .build();
 
-    // When the client connects successfully
-    stompClient.onConnect = () => {
-      console.log('Connected to WebSocket');
+    // Start the connection
+    hubConnection
+      .start()
+      .then(() => {
+        console.log('Connected to SignalR WebSocket');
 
-      // Subscribe to the 'newProduct' topic
-      stompClient.subscribe('/topic/newProduct', (message) => {
-        const product = JSON.parse(message.body);
-        console.log('New Product Added: ', product);
+        // Subscribe to the 'newProduct' event (adjust the event name based on your backend)
+        hubConnection.on('ReceiveMessage', (product) => {
+          console.log('New Product Added: ', product);
 
-        // Show a toast notification for the new product
-        toast.success(`New Product Added: ${product.name}`, {
-          position: "top-right",
-          autoClose: 3000,
+          // Show a toast notification for the new product
+          toast.success(`New Product Added: ${product.name}`, {
+            position: 'top-right',
+            autoClose: 3000,
+          });
         });
+      })
+      .catch((err) => {
+        console.error('Error connecting to SignalR WebSocket:', err);
       });
-    };
 
-    // Handle STOMP errors
-    stompClient.onStompError = (frame) => {
-      console.error(`STOMP error: ${frame.headers['message']}`);
-      console.error(`Details: ${frame.body}`);
-    };
-
-    // Activate the WebSocket connection
-    stompClient.activate();
-    setClient(stompClient);
+    // Set the connection to state
+    setConnection(hubConnection);
 
     // Cleanup the connection when the component unmounts
     return () => {
-      if (stompClient) stompClient.deactivate();
+      if (hubConnection) {
+        hubConnection.stop().then(() => console.log('SignalR connection stopped'));
+      }
     };
   }, [url, token]); // Depend on the `url` and `token` for creating the WebSocket connection
 
-  return client;
+  return connection;
 };

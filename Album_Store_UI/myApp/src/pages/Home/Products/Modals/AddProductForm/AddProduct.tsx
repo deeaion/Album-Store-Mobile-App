@@ -20,7 +20,12 @@ type FormData={
   genre:string;
   bandId:string;
 }
-export const AddProductForm = () => {
+type AddProductFormProps = {
+  setIsModalOpen: (isOpen: boolean) => void;
+};
+export const AddProductForm = ({
+  setIsModalOpen
+}:AddProductFormProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -34,12 +39,17 @@ export const AddProductForm = () => {
     };
     fetchBands();
   }, []);
+  function closeModal() {
+    setIsModalOpen(false);
+  }
 
   const onSubmit = (data: FormData) => {
     console.log(data);  // Handle form submission logic
     //calling the API to add a product
     createProduct(data).then((response)=>{
       console.log(response);
+      //close the modal
+      closeModal();
     }).catch((error)=>{
       console.log(error);
     });
@@ -48,32 +58,27 @@ export const AddProductForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <IonItem>
-        <IonLabel position="floating">Name</IonLabel>
-        <IonInput {...register('name')} />
+        <IonInput label='Name' labelPlacement='floating' {...register('name')} />
         {errors.name && <p>{errors.name.message}</p>}
       </IonItem>
 
       <IonItem>
-        <IonLabel position="floating">Description</IonLabel>
-        <IonInput {...register('description')} />
+        <IonInput label='Description' labelPlacement='floating' {...register('description')} />
         {errors.description && <p>{errors.description.message}</p>}
       </IonItem>
 
       <IonItem>
-        <IonLabel position="floating">Stock</IonLabel>
-        <IonInput type="number" {...register('numberOfStock')} />
+        <IonInput label='Stock' labelPlacement='floating' {...register('numberOfStock')} />
         {errors.numberOfStock && <p>{errors.numberOfStock.message}</p>}
       </IonItem>
 
       <IonItem>
-        <IonLabel position="floating">Genre</IonLabel>
-        <IonInput {...register('genre')} />
+        <IonInput label='Genre' labelPlacement='floating' {...register('genre')} />
         {errors.genre && <p>{errors.genre.message}</p>}
       </IonItem>
 
       <IonItem>
-        <IonLabel position="floating">Band</IonLabel>
-        <IonSelect {...register('bandId')}>
+        <IonSelect label='Band' labelPlacement='floating' {...register('bandId')}>
           {bands.map(band => (
             <IonSelectOption key={band.id} value={band.id}>
               {band.name}
@@ -87,3 +92,4 @@ export const AddProductForm = () => {
     </form>
   );
 };
+

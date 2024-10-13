@@ -13,8 +13,10 @@ export const Products = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const history = useHistory();  
   const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
-
-    useWebSocket('https://localhost:60505/ws');
+  //get url from .env file
+  const url = process.env.REACT_APP_SERVER_WSS|| 'https://localhost:60505/ws';
+  const token = localStorage.getItem('authToken')??'';
+    useWebSocket(url,token);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -86,7 +88,7 @@ export const Products = () => {
               </IonToolbar>
             </IonHeader>
             <IonContent>
-              <AddProductForm />  {/* Embed the AddProductForm */}
+              <AddProductForm setIsModalOpen={setIsModalOpen} />  {/* Embed the AddProductForm */}
             </IonContent>
           </IonModal>
         </>
