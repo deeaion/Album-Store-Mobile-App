@@ -1,0 +1,11 @@
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\bin\Debug\net8.0\AlbumStore.Common.deps.json
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\bin\Debug\net8.0\AlbumStore.Common.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\bin\Debug\net8.0\AlbumStore.Common.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\AlbumStore.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\AlbumStore.Common.AssemblyInfoInputs.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\AlbumStore.Common.AssemblyInfo.cs
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\AlbumStore.Common.csproj.CoreCompileInputs.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\AlbumStore.Common.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\refint\AlbumStore.Common.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\AlbumStore.Common.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Common\obj\Debug\net8.0\ref\AlbumStore.Common.dll

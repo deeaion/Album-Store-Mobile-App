@@ -1,0 +1,12 @@
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\bin\Debug\net8.0\AlbumStore.Domain.deps.json
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\bin\Debug\net8.0\AlbumStore.Domain.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\bin\Debug\net8.0\AlbumStore.Domain.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.csproj.AssemblyReference.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.AssemblyInfoInputs.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.AssemblyInfo.cs
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\refint\AlbumStore.Domain.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\AlbumStore.Domain.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Domain\obj\Debug\net8.0\ref\AlbumStore.Domain.dll
