@@ -1,0 +1,15 @@
+.detail-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 2rem;
+    align-items: center;
+}
+
+.detail-container__item{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 2rem;
+    align-items: center;
+}
