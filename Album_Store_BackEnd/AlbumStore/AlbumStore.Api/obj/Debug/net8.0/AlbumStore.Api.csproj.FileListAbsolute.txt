@@ -137,3 +137,4 @@ C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Api\obj\Debug\net8.0\AlbumStore.Api.
 C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Api\obj\Debug\net8.0\AlbumStore.Api.genruntimeconfig.cache
 C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Api\obj\Debug\net8.0\ref\AlbumStore.Api.dll
 C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Api\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Api\bin\Debug\net8.0\Newtonsoft.Json.dll

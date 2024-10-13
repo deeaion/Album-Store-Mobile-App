@@ -9,6 +9,9 @@ using AlbumStore.Application.Filtering;
 using AlbumStore.Application.Queries.ProductQueries;
 using AlbumStore.Application.QueryProjections;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
+using AlbumStore.Infrastructure.WebSockets;
+using Newtonsoft.Json;
 
 namespace AlbumStore.Api.Controllers;
 
@@ -16,6 +19,13 @@ namespace AlbumStore.Api.Controllers;
 [ApiController]
 public class ProductController : BaseController
 {
+    private readonly IHubContext<AlbumStoreHub> _hubContext;
+
+    public ProductController(IHubContext<AlbumStoreHub> hubContext)
+    {
+        _hubContext = hubContext;
+    }
+
     [HttpPost("")]
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
@@ -24,7 +34,20 @@ public class ProductController : BaseController
     {
         CommandResponse commandResponse = await Mediator.Send(productCommand, new CancellationToken());
         if (commandResponse.IsValid)
+        {
+            var productNotification = new
+            {
+                Type = "ProductAdded",
+                Message = "A new product has been added",
+                ProductName = productCommand.ProductDto.Name
+            };
+            string notificationMessage = JsonConvert.SerializeObject(productNotification);
+
+            // Send the notification message to all connected clients via SignalR
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", notificationMessage);
+
             return Ok(commandResponse);
+        }
 
         return BadRequest(commandResponse);
     }
@@ -40,6 +63,7 @@ public class ProductController : BaseController
 
         return Ok(productDto);
     }
+
     [HttpPut()]
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
@@ -78,7 +102,4 @@ public class ProductController : BaseController
     {
         return await Mediator.Send(query, new CancellationToken());
     }
-
 }
-
-

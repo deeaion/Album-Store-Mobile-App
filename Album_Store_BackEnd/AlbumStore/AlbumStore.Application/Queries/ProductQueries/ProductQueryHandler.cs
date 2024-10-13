@@ -42,7 +42,7 @@ namespace AlbumStore.Application.Queries.ProductQueries
                     Name = p.Name,
                     Description = p.Description,
                     Price = p.Price,
-                    Genre = p.Genre,
+                    Genre = p.Genre.ToString(),
                     BandId = p.BandId,
                     BandName = p.Band.Name,
                     Artists = p.Artists.Select(a => new ArtistDto
@@ -50,6 +50,7 @@ namespace AlbumStore.Application.Queries.ProductQueries
                         Id = a.Id,
                         Name = a.Name
                     }).ToList(),
+                    BaseImageUrl = p.BaseImageUrl,
                     ProductVersions = p.ProductVersions.Select(pv => new ProductVersionDto
                     {
                         Id = pv.Id,

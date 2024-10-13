@@ -13,6 +13,7 @@ namespace AlbumStore.Application.QueryProjections
         public double Price { get; set; }
         public string BandName { get; set; }
         public string ArtistsName { get; set; }
+        public string Image { get; set; }
 
     }
 }

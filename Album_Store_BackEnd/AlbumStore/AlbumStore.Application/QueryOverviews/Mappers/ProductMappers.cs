@@ -17,7 +17,8 @@ namespace AlbumStore.Application.QueryProjections.Mappers
                 Name = p.Name,
                 Price = p.Price,
                 BandName = p.Band.Name,
-                ArtistsName = string.Join(", ", p.Artists.Select(a => a.Name))
+                ArtistsName = string.Join(", ", p.Artists.Select(a => a.Name)),
+                Image = p.BaseImageUrl
 
             });
         }

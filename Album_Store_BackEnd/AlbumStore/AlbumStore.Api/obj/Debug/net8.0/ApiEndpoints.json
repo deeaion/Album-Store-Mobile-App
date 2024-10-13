@@ -140,6 +140,67 @@
     ]
   },
   {
+    "ContainingType": "AlbumStore.Api.Controllers.BandController",
+    "Method": "GetBands",
+    "RelativePath": "api/Band",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "User.UserId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AlbumStore.Application.Common.CollectionResponse\u00601[[AlbumStore.Application.Models.BandDto, AlbumStore.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AlbumStore.Api.Controllers.BandController",
+    "Method": "BandDto",
+    "RelativePath": "api/Band/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AlbumStore.Application.Models.BandDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
     "ContainingType": "AlbumStore.Api.Controllers.ProductController",
     "Method": "CreateProduct",
     "RelativePath": "api/Product",

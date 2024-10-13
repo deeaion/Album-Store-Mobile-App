@@ -33,9 +33,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            policy.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials(); // If using credentials
         });
 });
+
 //Configure entity framework
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
@@ -60,23 +64,23 @@ JwtConfig jwtConfig = new()
 };
 builder.Services
     .AddAuthentication(opt =>
-{
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(opt =>
-{
-    opt.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["validIssuer"],
-        ValidAudience = jwtSettings["validAudience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-    };
-}).AddCookie();
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(opt =>
+    {
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["validIssuer"],
+            ValidAudience = jwtSettings["validAudience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+        };
+    }).AddCookie();
 builder.Services.AddIdentity<ApplicationUser, Role>(o =>
 {
     o.Password.RequireDigit = true;
@@ -134,7 +138,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 // Register WebSocketManager as a singleton
-builder.Services.AddSingleton<WebSocketManager>();
+builder.Services.AddSingleton<AlbumStore.Infrastructure.WebSockets.WebSocketManager>();
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddSingleton(jwtConfig);
 builder.Services.AddScoped(x =>
@@ -144,12 +148,12 @@ builder.Services.AddScoped(x =>
     return factory.GetUrlHelper(actionContext);
 });
 
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-  
+
 }
 else
 {
@@ -157,28 +161,7 @@ else
     app.UseHsts();
 }
 
-app.UseWebSockets();
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path == "/ws")
-    {
-        if (context.WebSockets.IsWebSocketRequest)
-        {
-            var webSocketManager = context.RequestServices.GetRequiredService<AlbumStore.Infrastructure.WebSockets.WebSocketManager>();
-            var handler = new WebSocketHandler(webSocketManager);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            await handler.Handle(context, webSocket);
-        }
-        else
-        {
-            context.Response.StatusCode = 400;
-        }
-    }
-    else
-    {
-        await next();
-    }
-});
+
 
 
 app.UseSwagger();
@@ -189,6 +172,6 @@ app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<AlbumStoreHub>("/hubs/albumstore");
 app.MapControllers();
 app.Run();
-

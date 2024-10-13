@@ -37,7 +37,7 @@ namespace AlbumStore.Application.Commands.ProductCommands
             product.BaseImageUrl = request.ProductDto.BaseImageUrl;
             product.DetailsImageUrl = request.ProductDto.DetailsImageUrl;
             product.BandId = request.ProductDto.BandId ;
-            product.Genre = request.ProductDto.Genre;
+            product.Genre = Enum.Parse<Genre>(request.ProductDto.Genre.ToString());
             await _repository.SaveChangesAsync(cancellationToken);
             return CommandResponse.Ok();
         }
@@ -58,7 +58,7 @@ namespace AlbumStore.Application.Commands.ProductCommands
                 BaseImageUrl = request.ProductDto.BaseImageUrl,
                 DetailsImageUrl = request.ProductDto.DetailsImageUrl,
                 BandId = request.ProductDto.BandId ,
-                Genre = request.ProductDto.Genre,
+                Genre = Enum.Parse<Genre>(request.ProductDto.Genre.ToString()),
                 Artists = artists
             };
             _repository.Add(product);
