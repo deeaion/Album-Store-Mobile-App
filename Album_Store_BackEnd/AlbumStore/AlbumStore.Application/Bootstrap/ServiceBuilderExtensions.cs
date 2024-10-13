@@ -1,6 +1,8 @@
-﻿using Qubiz.CareerManagement.Application.Services;
+﻿using AlbumStore.Application.Interfaces;
+using AlbumStore.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Qubiz.CareerManagement.Application.Bootstrap;
+namespace AlbumStore.Application.Bootstrap;
 
 public static class ServiceBuilderExtensions
 {

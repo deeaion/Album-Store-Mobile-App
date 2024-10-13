@@ -1,6 +1,6 @@
 namespace AlbumStore.Common.Identity;
 
-public class ICurrentUserService
+public interface ICurrentUserService
 {
-    
+    Task<CurrentUser> GetCurrentUser();
 }

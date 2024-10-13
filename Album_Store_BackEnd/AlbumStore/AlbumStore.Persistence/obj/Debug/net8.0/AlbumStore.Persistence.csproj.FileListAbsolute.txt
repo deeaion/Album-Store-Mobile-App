@@ -1,0 +1,17 @@
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\bin\Debug\net8.0\AlbumStore.Persistence.deps.json
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\bin\Debug\net8.0\AlbumStore.Persistence.runtimeconfig.json
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\bin\Debug\net8.0\AlbumStore.Persistence.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\bin\Debug\net8.0\AlbumStore.Persistence.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\bin\Debug\net8.0\AlbumStore.Domain.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\bin\Debug\net8.0\AlbumStore.Domain.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.csproj.AssemblyReference.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.AssemblyInfoInputs.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.AssemblyInfo.cs
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumSto.82D91E40.Up2Date
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\refint\AlbumStore.Persistence.dll
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.pdb
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\AlbumStore.Persistence.genruntimeconfig.cache
+C:\Users\Deea\Desktop\AlbumStore\AlbumStore.Persistence\obj\Debug\net8.0\ref\AlbumStore.Persistence.dll
