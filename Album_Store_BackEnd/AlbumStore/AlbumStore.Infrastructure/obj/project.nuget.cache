@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WPkPbE+3MFQ=",
+  "dgSpecHash": "KD7t5dtZWXk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Infrastructure\\AlbumStore.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Infrastructure\\AlbumStore.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Deea\\.nuget\\packages\\fluentvalidation\\11.10.0\\fluentvalidation.11.10.0.nupkg.sha512",
     "C:\\Users\\Deea\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",

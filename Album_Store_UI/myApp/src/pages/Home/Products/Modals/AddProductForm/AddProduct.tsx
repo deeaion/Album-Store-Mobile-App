@@ -3,8 +3,8 @@ import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonSelect, IonSelec
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { getBands, Band } from '../../../../../api/bandAPI';
-import { createProduct } from '../../../../../api/productAPI';
+import { getBands, Band } from '../../../../../api/Band/bandAPI';
+import { createProduct } from '../../../../../api/Products/productAPI';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),

@@ -8,7 +8,6 @@ const api = axios.create({
   },
 });
 
-// Add a request interceptor to include the JWT token in the Authorization header
 api.interceptors.request.use(
   (config) =>
   {

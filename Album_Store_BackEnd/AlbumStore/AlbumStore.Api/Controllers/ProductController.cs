@@ -55,6 +55,7 @@ public class ProductController : BaseController
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ProductDto), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProduct(Guid id)
     {
         ProductDto productDto = await Mediator.Send(new GetProductQuery { Id = id }, new CancellationToken());
@@ -98,6 +99,7 @@ public class ProductController : BaseController
     [HttpGet("")]
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ProducesResponseType(typeof(List<ProductOverview>), (int)HttpStatusCode.OK)]
+    [AllowAnonymous]
     public async Task<CollectionResponse<ProductOverview>> GetProducts([FromQuery] GetFilteredProductsQueries query)
     {
         return await Mediator.Send(query, new CancellationToken());

@@ -1,0 +1,48 @@
+// src/api/productTypes.ts
+
+// Type for product details in the listing (simpler structure)
+export type ProductListItem = {
+  id: string;
+  name: string;
+  price: number;
+  bandName: string;
+  artistsNames: string;
+  Image: string; // Assuming a single image for listing
+};
+
+// Type for the full product details (more complex structure)
+export type ProductDetail = {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  genre?: string;
+  numberOfSales?: number;
+  numberOfStock?: number;
+  baseImageUrl?: string;
+  detailsImageUrl?: string;
+  bandId?: string;
+  productVersions?: string[];
+  artistIds?: string[];
+  artists?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  bandName?: string;
+
+};
+
+// Response structure for getting all products
+export type GetAllProductsProduct = {
+  records: ProductListItem[];
+  totalNumberOfRecords: number;
+};
+export type GetAllProductsFilter = Partial<{
+  Skip: number;
+  Take: number;
+  SortBy: string;
+  SortOrder: string;
+  Search: string;
+  ArtistName: string;
+  Genre: string;
+  ArtistId: string;
+}>;

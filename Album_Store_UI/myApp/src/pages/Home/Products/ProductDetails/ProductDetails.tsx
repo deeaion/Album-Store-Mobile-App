@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { IonContent, IonItem, IonLabel, IonButton, IonSpinner, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonIcon, IonCardTitle, IonCardSubtitle } from '@ionic/react';
-import { getProduct } from '../../../../api/productAPI'; // API call to get product details
+import { getProduct } from '../../../../api/Products/productAPI'; // API call to get product details
 import { arrowBackOutline } from 'ionicons/icons';
 
 type ProductVersion = {

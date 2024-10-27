@@ -1,52 +1,90 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import * as signalR from '@microsoft/signalr';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { getLogger } from '../utils/logger';
 
-export const useWebSocket = (url: string, token?: string) => {
+const log = getLogger('useSignalRWebSocket');
+
+interface SignalROptions {
+  url: string;
+  token?: string;
+  onMessage?: (product: any) => void;
+}
+
+export const useWebSocket = ({ url, token, onMessage }: SignalROptions) => {
   const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
+  const connectionRef = useRef<signalR.HubConnection | null>(null);
+  const reconnectAttempts = useRef(0);
+  const maxReconnectAttempts = 5; // Set a maximum limit on reconnect attempts
 
-  useEffect(() => {
-    // Create a new SignalR Hub connection
+  const startConnection = useCallback(async () => {
+    if (reconnectAttempts.current >= maxReconnectAttempts) {
+      log.log('Max reconnect attempts reached. Stopping reconnection attempts.');
+      return;
+    }
+
+    if (connectionRef.current?.state === signalR.HubConnectionState.Connected || !url) return;
+
     const hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(url, {
-        accessTokenFactory: () => token || '', // Provide the token for authentication
+        accessTokenFactory: () => token || '',
       })
-      .withAutomaticReconnect([0, 2000, 10000, 30000]) // Reconnect logic: try immediately, after 2s, 10s, 30s
-      .configureLogging(signalR.LogLevel.Information) // Log information to the console
+      .withAutomaticReconnect([0, 5000, 10000, 20000]) // Increased intervals
+      .configureLogging(signalR.LogLevel.Information)
       .build();
 
-    // Start the connection
-    hubConnection
-      .start()
-      .then(() => {
-        console.log('Connected to SignalR WebSocket');
+    hubConnection.on('ReceiveMessage', (product) => {
+      log.log('New message received:', product);
+      onMessage?.(product);
 
-        // Subscribe to the 'newProduct' event (adjust the event name based on your backend)
-        hubConnection.on('ReceiveMessage', (product) => {
-          console.log('New Product Added: ', product);
-
-          // Show a toast notification for the new product
-          toast.success(`New Product Added: ${product.name}`, {
-            position: 'top-right',
-            autoClose: 3000,
-          });
-        });
-      })
-      .catch((err) => {
-        console.error('Error connecting to SignalR WebSocket:', err);
+      toast.success(`New Product Added: ${product.name}`, {
+        position: 'top-right',
+        autoClose: 3000,
       });
+    });
 
-    // Set the connection to state
-    setConnection(hubConnection);
+    hubConnection.onreconnecting((err) => {
+      log.log('Reconnecting due to error:', err);
+      reconnectAttempts.current += 1;
+    });
 
-    // Cleanup the connection when the component unmounts
+    hubConnection.onreconnected(() => {
+      log.log('Reconnected to SignalR WebSocket');
+      reconnectAttempts.current = 0;
+    });
+
+    try {
+      await hubConnection.start();
+      log.log('Connected to SignalR WebSocket');
+      setConnection(hubConnection);
+      connectionRef.current = hubConnection;
+    } catch (err) {
+      log.log('Error connecting to SignalR:', err);
+      setTimeout(startConnection, 20000); // Retry after a delay if failed
+    }
+  }, [url, token, onMessage]);
+
+  useEffect(() => {
+    startConnection();
+
     return () => {
-      if (hubConnection) {
-        hubConnection.stop().then(() => console.log('SignalR connection stopped'));
+      if (connectionRef.current) {
+        connectionRef.current.stop().then(() => log.log('SignalR connection stopped'));
+        connectionRef.current = null;
       }
     };
-  }, [url, token]); // Depend on the `url` and `token` for creating the WebSocket connection
+  }, [startConnection]);
 
-  return connection;
+  const sendMessage = useCallback(
+    (message: any) => {
+      if (connectionRef.current?.state === signalR.HubConnectionState.Connected) {
+        connectionRef.current.send('SendMessage', message);
+      } else {
+        log.log('SignalR connection not open. Message not sent:', message);
+      }
+    },
+    []
+  );
+
+  return { sendMessage };
 };

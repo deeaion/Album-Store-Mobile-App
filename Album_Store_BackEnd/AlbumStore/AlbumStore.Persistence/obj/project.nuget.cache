@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xP3f98mWbhY=",
+  "dgSpecHash": "1li72FZhKkA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Persistence\\AlbumStore.Persistence.csproj",
+  "projectFilePath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Persistence\\AlbumStore.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Deea\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Deea\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.10\\microsoft.aspnetcore.cryptography.internal.8.0.10.nupkg.sha512",

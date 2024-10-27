@@ -1,62 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { IonContent, IonItem, IonLabel, IonSpinner, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon, IonModal, IonHeader, IonToolbar, IonTitle, IonButton } from '@ionic/react';
-import { useHistory } from 'react-router-dom';  
-import { add } from 'ionicons/icons';  // Importing the 'add' icon
-import { getAllProducts } from '../../../api/productAPI';
-import {AddProductForm} from './Modals/AddProductForm';  // Import the modal form component
+import React, { useEffect, useState, useContext, useCallback } from 'react';
+import {
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonSpinner,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButton
+} from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import { add } from 'ionicons/icons';
 import { Header } from '../../../components/Header';
 import { toast } from 'react-toastify';
-import {useWebSocket} from '../../../hooks/useWebSocket';
+import { ProductContext } from '../../../api/Products/ProductContext';
+import { AddProductForm } from './Modals/AddProductForm';
 
-export const Products = () => {
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const history = useHistory();  
-  const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
-  //get url from .env file
-  const url = process.env.REACT_APP_SERVER_WSS|| 'https://localhost:60505/ws';
-  const token = localStorage.getItem('authToken')??'';
-    useWebSocket(url,token);
+export const Products: React.FC = () => {
+  const { products, fetching, fetchingError, setFilter } = useContext(ProductContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
 
+  // Initialize filter on component mount
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      const result = await getAllProducts({ Skip: 0, Take: 10000 });
-      setProducts(result.records || []);
-      setLoading(false);
-    };
-    fetchProducts();
+    if (setFilter) {
+      setFilter({ Skip: 0, Take: 10000 }); // Set filter once on mount
+    }
+  }, [setFilter]);
+
+  // Handle product click, memoized for performance
+  const handleProductClick = useCallback((id: string) => {
+    history.push(`/product/${id}`);
+  }, [history]);
+
+  // Toggle add product modal
+  const handleAddProduct = useCallback(() => {
+    setIsModalOpen(true);
   }, []);
-  const handleProductClick = (id: string) => {
-    history.push(`/product/${id}`); 
-  };
 
-  const handleAddProduct = () => {
-    setIsModalOpen(true);  // Open the modal
-  };
-
+  // Close add product modal
   const closeModal = () => {
-    setIsModalOpen(false);  // Close the modal
+    setIsModalOpen(false);
   };
 
   return (
     <IonContent>
-        <Header/>
-        
-      {loading ? (
+      <Header />
+
+      {/* Show spinner when fetching */}
+      {fetching ? (
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <IonSpinner name="crescent" />
           <p>Loading products...</p>
         </div>
+      ) : fetchingError ? (
+        // Show detailed error message
+        <p style={{ textAlign: 'center', color: 'red' }}>
+          Failed to load products. {fetchingError.message || 'Please try again later.'}
+        </p>
       ) : (
-        <>
-          <IonGrid>
-            {products.map((product) => (
+        <IonGrid>
+          {/* Confirm products is an array and map through it */}
+          {Array.isArray(products) && products.length > 0 ? (
+            products.map((product) => (
               <IonRow key={product.id} onClick={() => handleProductClick(product.id)}>
                 <IonCol size="12">
                   <IonItem button>
                     <img
-                      src={`/${product.image || 'products/Image-Not-Found.jpg'}`}
+                      src={`/${product.baseImageUrl || 'products/Image-Not-Found.jpg'}`}
                       alt={product.name}
                       style={{ width: '100px', height: '100px', marginRight: '10px' }}
                     />
@@ -67,32 +85,35 @@ export const Products = () => {
                   </IonItem>
                 </IonCol>
               </IonRow>
-            ))}
-          </IonGrid>
-
-          {/* Floating Action Button for Adding Products */}
-          <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ '--margin-bottom': '20px' }}>
-            <IonFabButton color="primary" onClick={handleAddProduct}>
-              <IonIcon icon={add} />
-            </IonFabButton>
-          </IonFab>
-
-          {/* Modal for Adding Product */}
-          <IonModal isOpen={isModalOpen} onDidDismiss={closeModal}>
-            <IonHeader>
-              <IonToolbar>
-                <IonTitle>Add Product</IonTitle>
-                <IonButton onClick={closeModal} slot="end">
-                  Close
-                </IonButton>
-              </IonToolbar>
-            </IonHeader>
-            <IonContent>
-              <AddProductForm setIsModalOpen={setIsModalOpen} />  {/* Embed the AddProductForm */}
-            </IonContent>
-          </IonModal>
-        </>
+            ))
+          ) : (
+            // No products available message
+            <p style={{ textAlign: 'center' }}>No products available.</p>
+          )}
+        </IonGrid>
       )}
+
+      {/* Floating Action Button for Adding Products */}
+      <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ '--margin-bottom': '20px' }}>
+        <IonFabButton color="primary" onClick={handleAddProduct}>
+          <IonIcon icon={add} />
+        </IonFabButton>
+      </IonFab>
+
+      {/* Modal for Adding Product */}
+      <IonModal isOpen={isModalOpen} onDidDismiss={closeModal}>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Add Product</IonTitle>
+            <IonButton onClick={closeModal} slot="end">
+              Close
+            </IonButton>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent>
+          <AddProductForm setIsModalOpen={setIsModalOpen} />
+        </IonContent>
+      </IonModal>
     </IonContent>
   );
 };
