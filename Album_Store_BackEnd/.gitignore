@@ -1,0 +1,61 @@
+# User-specific files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.log
+*.obj
+*.bin
+*.exe
+*.dll
+*.pdb
+*.cache
+*.config
+*.csproj.user
+*.dbmdl
+*.jfm
+
+# Build directories
+bin/
+obj/
+
+# Visual Studio Code directories
+.vscode/
+
+# Rider directories
+.idea/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Entity Framework
+*.edmx
+*.tt
+*.sql
+
+# NuGet
+*.nupkg
+packages/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk

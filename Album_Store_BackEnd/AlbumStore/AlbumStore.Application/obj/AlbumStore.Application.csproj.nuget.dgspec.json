@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj": {}
+    "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj": {
+    "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj",
         "projectName": "AlbumStore.Application",
-        "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj",
+        "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj",
         "packagesPath": "C:\\Users\\Deea\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\obj\\",
+        "outputPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Deea\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,11 +29,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj": {
-                "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj"
+              "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj": {
+                "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj"
               },
-              "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj": {
-                "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj"
+              "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj": {
+                "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj"
               }
             }
           }
@@ -104,14 +104,14 @@
         }
       }
     },
-    "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj": {
+    "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
+        "projectUniqueName": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
         "projectName": "AlbumStore.Common",
-        "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
+        "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
         "packagesPath": "C:\\Users\\Deea\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\obj\\",
+        "outputPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Deea\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -165,14 +165,14 @@
         }
       }
     },
-    "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj": {
+    "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj",
         "projectName": "AlbumStore.Domain",
-        "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj",
+        "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\AlbumStore.Domain.csproj",
         "packagesPath": "C:\\Users\\Deea\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Domain\\obj\\",
+        "outputPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Deea\\AppData\\Roaming\\NuGet\\NuGet.Config",

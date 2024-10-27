@@ -2312,11 +2312,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Infrastructure\\AlbumStore.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Infrastructure\\AlbumStore.Infrastructure.csproj",
       "projectName": "AlbumStore.Infrastructure",
-      "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Infrastructure\\AlbumStore.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Infrastructure\\AlbumStore.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Deea\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Deea\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2334,11 +2334,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj": {
-              "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj"
+            "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj": {
+              "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\AlbumStore.Application.csproj"
             },
-            "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj": {
-              "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj"
+            "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj": {
+              "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj"
             }
           }
         }

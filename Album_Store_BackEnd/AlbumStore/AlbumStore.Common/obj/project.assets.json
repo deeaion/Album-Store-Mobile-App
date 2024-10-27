@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
+      "projectUniqueName": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
       "projectName": "AlbumStore.Common",
-      "projectPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
+      "projectPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\AlbumStore.Common.csproj",
       "packagesPath": "C:\\Users\\Deea\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Deea\\Desktop\\AlbumStore\\AlbumStore.Common\\obj\\",
+      "outputPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Common\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Deea\\AppData\\Roaming\\NuGet\\NuGet.Config",
