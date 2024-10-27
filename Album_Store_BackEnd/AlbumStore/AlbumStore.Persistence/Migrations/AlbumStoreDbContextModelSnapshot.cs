@@ -278,6 +278,12 @@ namespace AlbumStore.Persistence.Migrations
                     b.Property<string>("BaseImageUrl")
                         .HasColumnType("text");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -287,6 +293,12 @@ namespace AlbumStore.Persistence.Migrations
 
                     b.Property<int>("Genre")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -546,6 +558,36 @@ namespace AlbumStore.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("UserFavoriteBand", b =>
+                {
+                    b.Property<Guid>("BandId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("BandId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserFavoriteBand");
+                });
+
+            modelBuilder.Entity("UserFavoriteProduct", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("ProductId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserFavoriteProduct");
+                });
+
             modelBuilder.Entity("AlbumStore.Domain.Entities.ApplicationUser", b =>
                 {
                     b.HasOne("AlbumStore.Domain.Entities.Address", "Address")
@@ -696,6 +738,40 @@ namespace AlbumStore.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("UserFavoriteBand", b =>
+                {
+                    b.HasOne("AlbumStore.Domain.Entities.Band", null)
+                        .WithMany()
+                        .HasForeignKey("BandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_UserFavoriteBand_BandId");
+
+                    b.HasOne("AlbumStore.Domain.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_UserFavoriteBand_UserId");
+                });
+
+            modelBuilder.Entity("UserFavoriteProduct", b =>
+                {
+                    b.HasOne("AlbumStore.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_UserFavoriteProduct_ProductId");
+
+                    b.HasOne("AlbumStore.Domain.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_UserFavoriteProduct_UserId");
                 });
 
             modelBuilder.Entity("AlbumStore.Domain.Entities.ApplicationUser", b =>

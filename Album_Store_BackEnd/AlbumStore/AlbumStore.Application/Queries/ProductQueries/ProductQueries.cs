@@ -12,7 +12,7 @@ public class GetFilteredProductsQueries : BaseRequest<CollectionResponse<Product
 {
     public int Skip { get; set; }
     public int Take { get; set; }
-    public string? SortBy { get; set; }
+    public string? SortBy { get; set; } 
     public string? SortOrder { get; set; }
     public string? Search { get; set; }
     public string? ArtistName
@@ -35,4 +35,9 @@ public class GetFilteredProductsQueries : BaseRequest<CollectionResponse<Product
 public class GetProductQuery : BaseRequest<ProductDto>
 {
     public Guid Id { get; set; }
+}
+
+public class GetProductsGenresQuery : BaseRequest<CollectionResponse<string>>
+{
+   
 }

@@ -8,6 +8,7 @@ using AlbumStore.Application.Filtering;
 using AlbumStore.Application.QueryProjections;
 using AlbumStore.Application.QueryProjections.Mappers;
 using AlbumStore.Common.Helpful;
+using AlbumStore.Common.Identity;
 using AlbumStore.Domain.Entities;
 using AlbumStore.Domain.Repositories;
 using MediatR;
@@ -15,9 +16,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlbumStore.Application.Queries.ProductQueries
 {
-    public class ProductQueryHandler(IRepository<Product> productRepository) :
+    public class ProductQueryHandler(IRepository<Product> productRepository,ICurrentUserService service) :
         IRequestHandler<GetFilteredProductsQueries, CollectionResponse<ProductOverview>>,
-        IRequestHandler<GetProductQuery, ProductDto>
+        IRequestHandler<GetProductQuery, ProductDto>,
+        IRequestHandler<GetProductsGenresQuery, CollectionResponse<string>>
     {
         public async Task<CollectionResponse<ProductOverview>> Handle(GetFilteredProductsQueries request, CancellationToken cancellationToken)
         {
@@ -25,9 +27,14 @@ namespace AlbumStore.Application.Queries.ProductQueries
             query = query.ApplyFilter(request);
             int totalNumberOfItems= await query.CountAsync(cancellationToken);
             //to overview
-            IQueryable<ProductOverview> productOverviews = query.ToProductOverview();
+            String currentUserId = (await service.GetCurrentUser()).UserId;
+            IQueryable<ProductOverview> productOverviews = query.ToProductOverview(currentUserId);
             //add sort and pagination
-            productOverviews = productOverviews.SortAndPaginate(request.SortBy, request.SortOrder, request.Skip, request.Take);
+            productOverviews = productOverviews.SortAndPaginate(
+                !string.IsNullOrEmpty(request.SortBy) ? request.SortBy : "artist",
+                !string.IsNullOrEmpty(request.SortOrder) ? request.SortOrder : "asc",
+                request.Skip,
+                request.Take);
             List<ProductOverview> productOverviewsList = await productOverviews.ToListAsync(cancellationToken);
      
             return new CollectionResponse<ProductOverview>(productOverviewsList, totalNumberOfItems);
@@ -35,6 +42,9 @@ namespace AlbumStore.Application.Queries.ProductQueries
 
         public async Task<ProductDto> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
+            String currentUserId = (await service.GetCurrentUser()).UserId;
+            
+
             ProductDto? productDto =await productRepository.Query(p=>p.Id == request.Id)
                 .Select(p => new ProductDto
                 {
@@ -59,10 +69,17 @@ namespace AlbumStore.Application.Queries.ProductQueries
                         ImageUrl = pv.ImageUrl,
                         Price = pv.Price,
                         ProductId = pv.ProductId
-                    }).ToList()
+                    }).ToList(),
+                    IsFavorited = p.UsersWhoLikeThisProduct.Any(u => u.Id == currentUserId)
 
                 }).FirstOrDefaultAsync(cancellationToken);
             return productDto;
+        }
+
+        public Task<CollectionResponse<string>> Handle(GetProductsGenresQuery request, CancellationToken cancellationToken)
+        {
+            List<string> genres= Enum.GetNames(typeof(Genre)).ToList();
+            return Task.FromResult(new CollectionResponse<string>(genres, genres.Count));
         }
     }
 }

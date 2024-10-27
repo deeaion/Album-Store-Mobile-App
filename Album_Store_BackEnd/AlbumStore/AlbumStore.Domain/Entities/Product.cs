@@ -26,6 +26,8 @@ namespace AlbumStore.Domain.Entities
         public virtual ICollection<Artist>? Artists { get; set; }
         //link to product order items - may be null
         public virtual ICollection<ProductOrder>? ProductOrders { get; set; }
+        // users who like this product
+        public virtual ICollection<ApplicationUser>? UsersWhoLikeThisProduct { get; set; }
         public Product()
         {
             Artists = [];
@@ -36,6 +38,12 @@ namespace AlbumStore.Domain.Entities
         public string? BaseImageUrl { get; set; }
         public string? DetailsImageUrl { get; set; }
         public int NumberOfItemsOnHold { get; set; } = 0;
+
+        //information about who created and modified the product
+        public string? CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string? ModifiedBy { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
 
     }

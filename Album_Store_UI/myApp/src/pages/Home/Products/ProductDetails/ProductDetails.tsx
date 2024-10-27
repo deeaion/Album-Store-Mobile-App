@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { IonContent, IonItem, IonLabel, IonButton, IonSpinner, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonIcon, IonCardTitle, IonCardSubtitle } from '@ionic/react';
 import { getProduct } from '../../../../api/Products/productAPI'; // API call to get product details
 import { arrowBackOutline } from 'ionicons/icons';
+import { ProductDetail } from '../../../../api/Products/productTypes';
 
 type ProductVersion = {
   id: string;
@@ -13,24 +14,11 @@ type ProductVersion = {
   productId: string;
 };
 
-type ProductDetailsProps = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  genre: string;
-  numberOfSales: number;
-  numberOfStock: number;
-  baseImageUrl: string;
-  detailsImageUrl: string;
-  bandName: string;
-  artists: { id: string; name: string; genre: string }[];
-  productVersions: ProductVersion[];
-};
+
 
 export const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();  // Get the product ID from the URL
-  const [product, setProduct] = useState<ProductDetailsProps | null>(null);  // State to hold product details
+  const [product, setProduct] = useState<ProductDetail | null>(null);  // State to hold product details
   const [loading, setLoading] = useState(true);
   const history = useHistory();  // Initialize history to go back
 
@@ -67,7 +55,7 @@ export const ProductDetails = () => {
 
           </IonButton>
             <h2>
-                {product.name} - {product.bandName ? product.bandName : (product.artists && product.artists.length > 0 ? product.artists[0].name : '')}
+                {product.name} - {product.bandName ? product.bandName : 'Unknown Band'}
             </h2>
         </div>
 
@@ -103,15 +91,15 @@ export const ProductDetails = () => {
         </IonCard>
 
         {/* Display product versions if available */}
-        {product.productVersions.length > 0 && (
+        {product.productVersions && product.productVersions.length > 0 && (
           <IonCard>
             <IonCardHeader>
               <IonCardTitle>Versions</IonCardTitle>
             </IonCardHeader>
             {product.productVersions.map((version) => (
-              <IonCard key={version.id}>
+              <IonCard key={version.version}>
                 <IonCardHeader>
-                  <IonCardTitle>{version.version}</IonCardTitle>
+                  <IonCardTitle>{version.description}</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
                   <p>{version.description}</p>

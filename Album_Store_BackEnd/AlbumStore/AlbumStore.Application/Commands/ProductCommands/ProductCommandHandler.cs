@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AlbumStore.Application.Common;
+using AlbumStore.Common.Identity;
 using AlbumStore.Domain.Entities;
 using AlbumStore.Domain.Repositories;
 using MediatR;
@@ -12,17 +13,21 @@ using Microsoft.EntityFrameworkCore;
 namespace AlbumStore.Application.Commands.ProductCommands
 {
     internal class ProductCommandHandler(IRepository<Product> repository,
-        IRepository<Artist> artistRepository,
+        IRepository<Artist> _artistRepository,
+        IRepository<Product> _repository,
+        ICurrentUserService _currentUserService,
+        IRepository<ApplicationUser> _userRepository,
+        IRepository<Band> _bandRepository,
         ILogRepository<ProductCommandHandler> logRepository) :
         IRequestHandler<CreateProductCommand, CommandResponse>,
         IRequestHandler<UpdateProductCommand, CommandResponse>,
-        IRequestHandler<DeleteProductCommand, CommandResponse>
+        IRequestHandler<DeleteProductCommand, CommandResponse>,
+        IRequestHandler<AddFavoriteProductCommand, CommandResponse>,
+        IRequestHandler<RemoveFavoriteProductCommand, CommandResponse>
     {
-        private readonly IRepository<Product> _repository = repository;
-        private readonly IRepository<Artist> _artistRepository = artistRepository;
         private readonly ILogRepository<ProductCommandHandler> _logRepository = logRepository;
 
-        public async  Task<CommandResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             Product product = _repository.Query(p => p.Id == request.ProductDto.Id).FirstOrDefault();
             if (product == null)
@@ -36,8 +41,12 @@ namespace AlbumStore.Application.Commands.ProductCommands
             product.NumberOfStock = request.ProductDto.NumberOfStock;
             product.BaseImageUrl = request.ProductDto.BaseImageUrl;
             product.DetailsImageUrl = request.ProductDto.DetailsImageUrl;
-            product.BandId = request.ProductDto.BandId ;
+            product.BandId = request.ProductDto.BandId;
             product.Genre = Enum.Parse<Genre>(request.ProductDto.Genre.ToString());
+            //get the user who modified the product
+            String user = (await _currentUserService.GetCurrentUser()).UserId;
+            product.ModifiedBy = user;
+            product.ModifiedDate = DateTime.Now;
             await _repository.SaveChangesAsync(cancellationToken);
             return CommandResponse.Ok();
         }
@@ -45,8 +54,10 @@ namespace AlbumStore.Application.Commands.ProductCommands
         public async Task<CommandResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             List<Artist> artists = [];
-            if(request.ProductDto.ArtistIds!=null)
-            { artists = await GetArtists(request.ProductDto.ArtistIds);}
+            if (request.ProductDto.ArtistIds != null)
+            { artists = await GetArtists(request.ProductDto.ArtistIds); }
+            //get the user who created the product
+            String user = (await _currentUserService.GetCurrentUser()).UserId;
             Product product = new Product
             {
                 Id = Guid.NewGuid(),
@@ -57,9 +68,11 @@ namespace AlbumStore.Application.Commands.ProductCommands
                 NumberOfStock = request.ProductDto.NumberOfStock,
                 BaseImageUrl = request.ProductDto.BaseImageUrl,
                 DetailsImageUrl = request.ProductDto.DetailsImageUrl,
-                BandId = request.ProductDto.BandId ,
+                BandId = request.ProductDto.BandId,
                 Genre = Enum.Parse<Genre>(request.ProductDto.Genre.ToString()),
-                Artists = artists
+                Artists = artists,
+                CreatedBy = user,
+                CreatedDate = DateTime.Now
             };
             _repository.Add(product);
             await _repository.SaveChangesAsync(cancellationToken);
@@ -71,7 +84,7 @@ namespace AlbumStore.Application.Commands.ProductCommands
             Product product = await _repository.Query(p => p.Id == request.Id).FirstOrDefaultAsync();
             if (product == null)
             {
-                return CommandResponse.Failed(new[] {"There is no Product with that Id!"});
+                return CommandResponse.Failed(new[] { "There is no Product with that Id!" });
 
             }
             _repository.Remove(product);
@@ -91,5 +104,73 @@ namespace AlbumStore.Application.Commands.ProductCommands
             }
             return artists;
         }
+
+        public async Task<CommandResponse> Handle(AddFavoriteProductCommand request,
+            CancellationToken cancellationToken)
+        {
+            // get current user id
+            String userId = (await _currentUserService.GetCurrentUser()).UserId;
+            Product product = await _repository.Query(p => p.Id == request.ProductId).FirstOrDefaultAsync();
+            if (product == null)
+            {
+                return CommandResponse.Failed(new[] { "There is no Product with that Id!" });
+            }
+            ApplicationUser user = await _userRepository.Query(u => u.Id == userId).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return CommandResponse.Failed(new[] { "There is no User with that Id!" });
+            }
+            if (product.UsersWhoLikeThisProduct == null)
+            {
+                product.UsersWhoLikeThisProduct = new List<ApplicationUser>();
+            }
+            product.UsersWhoLikeThisProduct.Add(user);
+            //user.FavoriteProducts.Add(product);
+            await _repository.SaveChangesAsync(cancellationToken);
+            return CommandResponse.Ok();
+        }
+
+
+
+        public async Task<CommandResponse> Handle(RemoveFavoriteProductCommand request, CancellationToken cancellationToken)
+        {
+            Console.WriteLine("HERE"); // Debugging message
+
+            // Get the current user ID
+            String userId = (await _currentUserService.GetCurrentUser()).UserId;
+
+            // Fetch the product and include UsersWhoLikeThisProduct to ensure the relationship is loaded
+            Product? product = await _repository
+                .Query(p => p.Id == request.ProductId)
+                .Include(p => p.UsersWhoLikeThisProduct) // Ensure relationship is loaded
+                .FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                return CommandResponse.Failed(new string[] { "Product does not exist!" });
+            }
+
+            // Fetch the user
+            ApplicationUser? user = await _userRepository.Query(u => u.Id == userId).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return CommandResponse.Failed(new string[] { "User does not exist!" });
+            }
+
+            // Check if user has this product as a favorite
+            if (!product.UsersWhoLikeThisProduct.Contains(user))
+            {
+                return CommandResponse.Failed(new string[] { "User has not favorited this product!" });
+            }
+
+            // Remove the user from the product's UsersWhoLikeThisProduct collection
+            product.UsersWhoLikeThisProduct.Remove(user);
+
+            // Save changes to update the database
+            await _repository.SaveChangesAsync(cancellationToken);
+
+            return CommandResponse.Ok();
+        }
+
     }
 }

@@ -10,6 +10,7 @@ using System.Net;
 using AlbumStore.Application.Queries.BandQueries;
 using AlbumStore.Application.Filtering;
 using AlbumStore.Api.Controllers.Base;
+using AlbumStore.Application.Commands.ProductCommands;
 
 namespace AlbumStore.Api.Controllers
 {
@@ -37,6 +38,20 @@ namespace AlbumStore.Api.Controllers
         public async Task<CollectionResponse<BandDto>> GetBands([FromQuery] GetBandsQuery query)
         {
             return await Mediator.Send(query, new CancellationToken());
+        }
+        // add band to favorite
+        [HttpPost("AddFavorite")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> AddFavoriteBand([FromBody] AddFavoriteBandCommand addFavoriteBandCommand)
+        {
+            CommandResponse commandResponse = await Mediator.Send(addFavoriteBandCommand, new CancellationToken());
+            if (commandResponse.IsValid)
+            {
+                return Ok(commandResponse);
+            }
+            return BadRequest(commandResponse);
         }
     }
 }

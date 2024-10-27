@@ -14,6 +14,7 @@ namespace AlbumStore.Application.QueryProjections
         public string BandName { get; set; }
         public string ArtistsName { get; set; }
         public string Image { get; set; }
+        public bool IsFavorited { get; set; }
 
     }
 }

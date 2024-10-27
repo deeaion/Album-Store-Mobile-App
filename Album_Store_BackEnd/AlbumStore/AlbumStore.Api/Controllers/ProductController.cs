@@ -53,9 +53,9 @@ public class ProductController : BaseController
     }
 
     [HttpGet("{id}")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ProducesResponseType(typeof(ProductDto), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    [AllowAnonymous]
     public async Task<IActionResult> GetProduct(Guid id)
     {
         ProductDto productDto = await Mediator.Send(new GetProductQuery { Id = id }, new CancellationToken());
@@ -99,9 +99,43 @@ public class ProductController : BaseController
     [HttpGet("")]
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ProducesResponseType(typeof(List<ProductOverview>), (int)HttpStatusCode.OK)]
-    [AllowAnonymous]
     public async Task<CollectionResponse<ProductOverview>> GetProducts([FromQuery] GetFilteredProductsQueries query)
     {
         return await Mediator.Send(query, new CancellationToken());
     }
+    // get all genres
+    [HttpGet("Genres")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.OK)]
+    public async Task<CollectionResponse<string>> GetGenres()
+    {
+        return await Mediator.Send(new GetProductsGenresQuery(), new CancellationToken());
+    }
+    // add product to favorite
+    [HttpPost("Favorite")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> AddFavoriteProduct([FromBody] AddFavoriteProductCommand addFavoriteProductCommand)
+    {
+        CommandResponse commandResponse = await Mediator.Send(addFavoriteProductCommand, new CancellationToken());
+        if (commandResponse.IsValid)
+            return Ok(commandResponse);
+
+        return BadRequest(commandResponse);
+    }
+    // remove product from favorite
+    [HttpDelete("Favorite")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> RemoveFavoriteProduct([FromBody] RemoveFavoriteProductCommand removeFavoriteProductCommand)
+    {
+        CommandResponse commandResponse = await Mediator.Send(removeFavoriteProductCommand, new CancellationToken());
+        if (commandResponse.IsValid)
+            return Ok(commandResponse);
+
+        return BadRequest(commandResponse);
+    }
+
 }

@@ -1,14 +1,20 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useContext, useEffect, useState } from 'react';
+import { IonContent, IonPage } from '@ionic/react';
 import './Home.css';
-import {Header} from '../../components/Header';
+import { Header } from '../../components/Header';
 import Products from './Products/Products';
-import { toast } from 'react-toastify';
+import Login from '../Login/Login'; // Assume Login component is correctly imported
+import { AuthContext } from '../../api/Auth/AuthProvider';
+
 const Home: React.FC = () => {
+  // get from context
+  const isAuthenticated=useContext(AuthContext);
 
   return (
     <IonPage>
-        
-       <Products/>
+      <IonContent>
+        {isAuthenticated ? <Products /> : <Login />}
+      </IonContent>
     </IonPage>
   );
 };

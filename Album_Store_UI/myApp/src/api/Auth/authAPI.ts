@@ -26,10 +26,13 @@ export interface AuthProps {
 }
 
 // Login
-export const login = async (email: string, password: string,asGuest?:boolean): Promise<AuthProps> => {
-  const response: AxiosResponse<AuthProps> = await api.post(apiUrl + "/login", { email, password,asGuest });
-  return response.data;  // Now TypeScript knows `data` has a `token`
-}
+// In authAPI.ts
+export const login = async (email: string, password: string, asGuest?: boolean): Promise<AuthProps> => {
+  const response: AxiosResponse<AuthProps> = await api.post(apiUrl + "/login", { email, password, asGuest });
+  console.log("API response data:", response.data); // Check the response structure here
+  return response.data;
+};
+
 
 // Register
 type RegisterCommand = {

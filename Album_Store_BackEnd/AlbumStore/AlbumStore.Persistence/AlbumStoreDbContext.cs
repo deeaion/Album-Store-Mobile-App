@@ -33,15 +33,7 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
         modelBuilder.SeedForRoles();
     }
 
-    private static void ConfigureProduct(ModelBuilder builder)
-    {
-        // Add configuration code for the Product entity here
-        builder.Entity<Product>().Property(p => p.Id).ValueGeneratedNever();
-        builder.Entity<Product>().HasMany(p => p.ProductVersions).WithOne(pv => pv.Product).HasForeignKey(pv => pv.ProductId);
-        builder.Entity<Product>().HasMany(p => p.Artists).WithMany(a => a.Products);
-        builder.Entity<Product>().HasMany(p => p.ProductOrders).WithOne(po => po.Product).HasForeignKey(po => po.ProductId);
-        builder.Entity<Product>().HasOne(p => p.Band).WithMany(b => b.Products).HasForeignKey(p => p.BandId);
-    }
+
 
     private static void ConfigureAddress(ModelBuilder builder)
     {
@@ -49,14 +41,67 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
         builder.Entity<Address>().Property(a => a.Id).ValueGeneratedNever();
     }
 
+    private static void ConfigureProduct(ModelBuilder builder)
+    {
+        builder.Entity<Product>().Property(p => p.Id).ValueGeneratedNever();
+        builder.Entity<Product>().HasMany(p => p.ProductVersions).WithOne(pv => pv.Product).HasForeignKey(pv => pv.ProductId);
+        builder.Entity<Product>().HasMany(p => p.Artists).WithMany(a => a.Products);
+        builder.Entity<Product>().HasMany(p => p.ProductOrders).WithOne(po => po.Product).HasForeignKey(po => po.ProductId);
+        builder.Entity<Product>().HasOne(p => p.Band).WithMany(b => b.Products).HasForeignKey(p => p.BandId);
+
+        // Define join table for favorite products
+        builder.Entity<Product>()
+            .HasMany(p => p.UsersWhoLikeThisProduct)
+            .WithMany(u => u.FavoriteProducts)
+            .UsingEntity<Dictionary<string, object>>(
+                "UserFavoriteProduct",  // Custom join table name
+j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_UserFavoriteProduct_UserId"),
+                j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId").HasConstraintName("FK_UserFavoriteProduct_ProductId"));
+    }
+
     private static void ConfigureUser(ModelBuilder builder)
     {
-        // Add configuration code for the ApplicationUser entity here
         builder.Entity<ApplicationUser>().Property(u => u.Id).ValueGeneratedNever();
         builder.Entity<ApplicationUser>().HasMany(u => u.UserRoles).WithOne(ur => ur.User).HasForeignKey(ur => ur.UserId);
         builder.Entity<ApplicationUser>().HasMany(u => u.Orders).WithOne(o => o.User).HasForeignKey(o => o.UserId);
         builder.Entity<ApplicationUser>().HasOne(u => u.Address);
+
+        // Define the join table for UserFavoriteProduct (only defined here to avoid redundancy)
+        builder.Entity<ApplicationUser>()
+            .HasMany(u => u.FavoriteProducts)
+            .WithMany(p => p.UsersWhoLikeThisProduct)
+            .UsingEntity<Dictionary<string, object>>(
+                "UserFavoriteProduct",
+                j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId").HasConstraintName("FK_UserFavoriteProduct_ProductId"),
+                j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").HasConstraintName("FK_UserFavoriteProduct_UserId"));
+
+        // Define the join table for UserFavoriteBand (only defined here to avoid redundancy)
+        builder.Entity<ApplicationUser>()
+            .HasMany(u => u.FavoriteBands)
+            .WithMany(b => b.UsersWhoLikeThisBand)
+            .UsingEntity<Dictionary<string, object>>(
+                "UserFavoriteBand",
+                j => j.HasOne<Band>().WithMany().HasForeignKey("BandId").HasConstraintName("FK_UserFavoriteBand_BandId"),
+                j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").HasConstraintName("FK_UserFavoriteBand_UserId"));
     }
+
+
+    private static void ConfigureBand(ModelBuilder builder)
+    {
+        builder.Entity<Band>().Property(b => b.Id).ValueGeneratedNever();
+        builder.Entity<Band>().HasMany(b => b.Members).WithMany(a => a.Bands);
+        builder.Entity<Band>().HasMany(b => b.Products).WithOne(p => p.Band).HasForeignKey(p => p.BandId);
+
+        // Define join table for favorite bands
+        builder.Entity<Band>()
+            .HasMany(b => b.UsersWhoLikeThisBand)
+            .WithMany(u => u.FavoriteBands)
+            .UsingEntity<Dictionary<string, object>>(
+                "UserFavoriteBand",  // Custom join table name
+                j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").HasConstraintName("FK_UserFavoriteBand_UserId"),
+                j => j.HasOne<Band>().WithMany().HasForeignKey("BandId").HasConstraintName("FK_UserFavoriteBand_BandId"));
+    }
+
 
     private static void ConfigureArtist(ModelBuilder builder)
     {
@@ -66,13 +111,7 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
         builder.Entity<Artist>().HasMany(a => a.Bands).WithMany(b => b.Members);
     }
 
-    private static void ConfigureBand(ModelBuilder builder)
-    {
-        // Add configuration code for the Band entity here
-        builder.Entity<Band>().Property(b => b.Id).ValueGeneratedNever();
-        builder.Entity<Band>().HasMany(b => b.Members).WithMany(a => a.Bands);
-        builder.Entity<Band>().HasMany(b => b.Products).WithOne(p => p.Band).HasForeignKey(p => p.BandId);
-    }
+   
 
     private static void ConfigureOrder(ModelBuilder builder)
     {

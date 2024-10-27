@@ -8,8 +8,16 @@ export type ProductListItem = {
   bandName: string;
   artistsNames: string;
   Image: string; // Assuming a single image for listing
+  isFavorited: boolean;
 };
-
+export type ProductVersion = {
+  id: string;
+  version: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  productId: string;
+}
 // Type for the full product details (more complex structure)
 export type ProductDetail = {
   id: string;
@@ -22,12 +30,13 @@ export type ProductDetail = {
   baseImageUrl?: string;
   detailsImageUrl?: string;
   bandId?: string;
-  productVersions?: string[];
+  productVersions?: ProductVersion[];
   artistIds?: string[];
   artists?: string[];
   createdAt?: Date;
   updatedAt?: Date;
   bandName?: string;
+  isFavorited?: boolean;
 
 };
 

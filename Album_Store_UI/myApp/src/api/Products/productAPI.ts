@@ -1,7 +1,10 @@
+// src/api/productAPI.ts
 import axios from 'axios';
-import { ProductDetail, GetAllProductsProduct, GetAllProductsFilter } from './productTypes';
+import { GetAllProductsFilter, GetAllProductsProduct, ProductDetail } from './productTypes';
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 
-const API_BASE_URL = process.env.REACT_APP_SERVER_HTTPS || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_SERVER_HTTPS || 'http://localhost:60505/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,18 +13,25 @@ const api = axios.create({
   },
 });
 
-// Interceptor to add token conditionally
+const retrieveToken = async () => {
+  const { value } = await Preferences.get({ key: 'authToken' });
+  return value;
+};
+
+// Interceptor to add token to all requests
 api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token && config.headers?.authRequired) {
+  async (config) => {
+    // Retrieve token asynchronously
+    const token = await retrieveToken();
+    console.log("Attempting request with token:", token); // Debug token presence
+    if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
-    delete config.headers?.authRequired;
     return config;
   },
   (error) => Promise.reject(error)
 );
+
 
 // Helper for error handling
 const handleError = (error: any) => error.response?.data || { message: error.message };
@@ -78,6 +88,25 @@ export const updateProduct = async (id: string, productData: Partial<ProductDeta
 export const deleteProduct = async (id: string): Promise<{ message: string }> => {
   try {
     const response = await api.delete(`/product/${id}`, { headers: { authRequired: true } });
+    return response.data;
+  } catch (error: any) {
+    throw handleError(error);
+  }
+};
+
+// add product to favorites -> send as object json with productId to /product/favorite
+export const addProductToFavorites = async (productId: string): Promise<{ message: string }> => {
+  try {
+    const response = await api.post(`/product/favorite`, { productId });
+    return response.data;
+  } catch (error: any) {
+    throw handleError(error);
+  }
+};
+// remove product from favorites -> send as object json with productId to /product/favorite
+export const removeProductFromFavorites = async (productId: string): Promise<{ message: string }> => {
+  try {
+    const response = await api.delete(`/product/favorite`, { data: { productId } });
     return response.data;
   } catch (error: any) {
     throw handleError(error);

@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins("http://localhost:5173").WithOrigins("http://localhost:5174")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials(); // If using credentials
@@ -80,7 +80,27 @@ builder.Services
             ValidAudience = jwtSettings["validAudience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
         };
-    }).AddCookie();
+
+        // Allow WebSocket connections in JWT bearer auth
+        opt.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // If the request is for our SignalR hub
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    path.StartsWithSegments("/hubs/albumstore"))
+                {
+                    // Read the token from the query string
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
+    });
+
 builder.Services.AddIdentity<ApplicationUser, Role>(o =>
 {
     o.Password.RequireDigit = true;
@@ -148,7 +168,15 @@ builder.Services.AddScoped(x =>
     return factory.GetUrlHelper(actionContext);
 });
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+    options.MaximumReceiveMessageSize = 1024 * 1024; // Increase to 1 MB if necessary
+    options.KeepAliveInterval = TimeSpan.FromMinutes(1); // Interval to ping clients
+    options.ClientTimeoutInterval = TimeSpan.FromMinutes(2); // Disconnect after 2 mins if no response
+});
+
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

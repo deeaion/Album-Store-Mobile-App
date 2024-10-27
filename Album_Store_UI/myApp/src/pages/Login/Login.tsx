@@ -1,19 +1,29 @@
-// src/pages/Login/Login.tsx
-
 import React, { useState, useEffect, useContext } from 'react';
-import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, useIonAlert, IonSpinner } from '@ionic/react';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  useIonAlert,
+  IonSpinner
+} from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../api/Auth/AuthProvider'; // Import AuthContext
 import './Login.css';
 
 export const Login: React.FC = () => {
-  const { login, isAuthenticating, authenticationError } = useContext(AuthContext); // Use AuthContext
+  const { login, isAuthenticating, authenticationError, isAuthenticated } = useContext(AuthContext); // Add isAuthenticated
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const history = useHistory();
   const [alert] = useIonAlert();
 
-  // Effect to show an alert if there's an authentication error
+  // Show an alert if there's an authentication error
   useEffect(() => {
     if (authenticationError) {
       alert({
@@ -24,10 +34,16 @@ export const Login: React.FC = () => {
     }
   }, [authenticationError, alert]);
 
+  // Redirect to home if login was successful
+  useEffect(() => {
+    if (isAuthenticated && !isAuthenticating) {
+      history.push('/'); // Redirect to home on successful login
+    }
+  }, [isAuthenticated, isAuthenticating, history]);
+
   // Login handler
   const handleLogin = async (asGuest: boolean) => {
     await login?.(email, password, asGuest);
-    if (!authenticationError) history.push('/'); // Redirect on successful login
   };
 
   return (

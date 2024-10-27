@@ -14,6 +14,8 @@ public class ApplicationUser : IdentityUser
     public virtual ICollection<Order> Orders { get; set; }
     public virtual Guid? AddressId { get; set; }
     public virtual Address? Address { get; set; }
+    public virtual ICollection<Product> FavoriteProducts { get; set; }
+    public virtual ICollection<Band> FavoriteBands { get; set; }
     public ApplicationUser()
     {
         UserRoles = [];

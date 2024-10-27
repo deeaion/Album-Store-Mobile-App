@@ -47,8 +47,24 @@ public  class AuthCommandHandler(UserManager<ApplicationUser> userManager,
                 var errors = creationResult.Errors.Select(e => e.Description).ToArray();
                 return CommandResponse.Failed(errors);
             }
-
-            IdentityResult roleResult = await userManager.AddToRoleAsync(applicationUser, Roles.User);
+            //if the command has a role, add the user to the role
+            IdentityResult roleResult;
+            if (!string.IsNullOrEmpty(command.Role))
+            {
+                roleResult = await userManager.AddToRoleAsync(applicationUser, command.Role);
+                if (!roleResult.Succeeded)
+                {
+                    return CommandResponse.Failed(roleResult.Errors.Select(e => e.Description).ToArray());
+                }
+            }
+            else
+            {
+                roleResult = await userManager.AddToRoleAsync(applicationUser, Roles.User);
+                if (!roleResult.Succeeded)
+                {
+                    return CommandResponse.Failed(roleResult.Errors.Select(e => e.Description).ToArray());
+                }
+            }
             if (!roleResult.Succeeded)
             {
                 return CommandResponse.Failed(roleResult.Errors.Select(e => e.Description).ToArray());

@@ -19,6 +19,7 @@ namespace AlbumStore.Application.Filtering
         public string? BandName { get; set; }
         public List<Guid>? ArtistIds { get; set; }
         public List<ArtistDto>? Artists { get; set; }
+        public Boolean IsFavorited { get; set; }
 
 
     }

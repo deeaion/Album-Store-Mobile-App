@@ -10,6 +10,9 @@ namespace AlbumStore.Domain.Entities;
     public virtual ICollection<Artist>? Members { get; set; }
     //products
     public virtual ICollection<Product>? Products { get; set; }
+    // users who like this band
+    public virtual ICollection<ApplicationUser>? UsersWhoLikeThisBand { get; set; }
+    
     public Band()
     {
         Members = [];

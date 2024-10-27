@@ -1,8 +1,8 @@
 // src/contexts/AuthProvider.tsx
-
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { login as loginAPI, AuthProps } from './authAPI'; // Use correct path
+import { login as loginAPI, AuthProps, LoginResult } from './authAPI';
+import { Preferences } from '@capacitor/preferences';
 
 type LoginFn = (email: string, password: string, isGuestLogin?: boolean) => Promise<void>;
 
@@ -12,6 +12,7 @@ export interface AuthState {
   isAuthenticating: boolean;
   login?: LoginFn;
   token: string;
+  loginResult?: LoginResult;
 }
 
 const initialState: AuthState = {
@@ -19,6 +20,7 @@ const initialState: AuthState = {
   isAuthenticating: false,
   authenticationError: null,
   token: '',
+  loginResult: undefined,
 };
 
 export const AuthContext = React.createContext<AuthState>(initialState);
@@ -27,41 +29,73 @@ interface AuthProviderProps {
   children: PropTypes.ReactNodeLike;
 }
 
+const storeToken = async (token: string) => {
+  await Preferences.set({ key: 'authToken', value: token });
+};
+
+const retrieveToken = async () => {
+  const { value } = await Preferences.get({ key: 'authToken' });
+  return value;
+};
+
+const clearToken = async () => {
+  await Preferences.remove({ key: 'authToken' });
+};
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, setState] = useState<AuthState>(initialState);
   const { isAuthenticated, isAuthenticating, authenticationError, token } = state;
 
- const login = useCallback<LoginFn>(async (email, password, asGuest = false) => {
-  setState((prevState) => ({ ...prevState, isAuthenticating: true, authenticationError: null }));
+  const login = useCallback<LoginFn>(async (email, password, asGuest = false) => {
+    setState((prevState) => ({ ...prevState, isAuthenticating: true, authenticationError: null }));
 
-  try {
-    const response = await loginAPI(email, password, asGuest);
-    console.log("Response:", response);  // Check if response is received
-    const token = response?.result?.token || response?.result?.token;  // Update this to match the actual structure
-    console.log("Token:", token);  // Check if token is now defined
+    try {
+      const response = await loginAPI(email, password, asGuest);
+      const token = response?.result?.token;
+      const loginResult = response?.result;
 
-    if (token) {
-      localStorage.setItem('authToken', token);  // Save token to localStorage
+      if (token) {
+        await storeToken(token); // Use Capacitor to store token
+        setState((prevState) => ({
+          ...prevState,
+          token,
+          isAuthenticated: true,
+          isAuthenticating: false,
+          loginResult,
+        }));
+      } else {
+        throw new Error('Login failed: No token received');
+      }
+    } catch (error) {
       setState((prevState) => ({
         ...prevState,
-        token,
-        isAuthenticated: true,
+        authenticationError: (error as Error).message,
         isAuthenticating: false,
       }));
-    } else {
-      throw new Error('Login failed: No token received');
     }
-  } catch (error) {
-    setState((prevState) => ({
-      ...prevState,
-      authenticationError: (error as Error).message,
-      isAuthenticating: false,
-    }));
-  }
-}, []);
+  }, []);
 
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const savedToken = await retrieveToken(); // Retrieve token from Preferences
+      if (savedToken) {
+        setState((prevState) => ({
+          ...prevState,
+          token: savedToken,
+          isAuthenticated: true,
+        }));
+      }
+    };
+    checkAuthentication();
+  }, []);
 
-  const value = { isAuthenticated, login, isAuthenticating, authenticationError, token };
+  const logout = useCallback(async () => {
+    await clearToken();
+    setState(initialState);
+    window.location.href = '/login';
+  }, []);
+
+  const value = { isAuthenticated, login, logout, isAuthenticating, authenticationError, token };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

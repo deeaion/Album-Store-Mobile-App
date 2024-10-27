@@ -1,6 +1,5 @@
 // src/App.tsx
-
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { IonApp, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -30,16 +29,13 @@ const App: React.FC = () => {
             {isAuthenticated ? <Redirect to="/" /> : <Login />}
           </Route>
 
-          <Route path="/" exact>
-            <Home />
-          </Route>
-
           {/* Protected Routes */}
+          <PrivateRoute path="/" exact component={Home} />
           <PrivateRoute path="/product/:id" component={ProductDetails} />
 
-          {/* Fallback route */}
-          <Route>
-            <Redirect to="/" />
+          {/* Fallback Route */}
+          <Route path="*">
+            <Redirect to={isAuthenticated ? "/" : "/login"} />
           </Route>
         </Switch>
       </IonReactRouter>

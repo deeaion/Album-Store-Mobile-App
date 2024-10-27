@@ -21,3 +21,17 @@ public class DeleteProductCommand : BaseRequest<CommandResponse>
     public Guid Id { get; set; }
 }
 
+public class AddFavoriteProductCommand : BaseRequest<CommandResponse>
+{
+    public Guid ProductId { get; set; }
+}
+
+public class AddFavoriteBandCommand : BaseRequest<CommandResponse>
+{
+    public Guid BandId { get; set; }
+}
+public class RemoveFavoriteProductCommand : BaseRequest<CommandResponse>
+{
+    public Guid ProductId { get; set; }
+}
+
