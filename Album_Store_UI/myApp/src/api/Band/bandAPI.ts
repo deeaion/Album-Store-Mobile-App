@@ -1,3 +1,4 @@
+import { Preferences } from '@capacitor/preferences';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_SERVER_HTTPS || 'http://localhost:5000/api';
@@ -9,14 +10,17 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
+  async (config) => {
+    const { value: token } = await Preferences.get({ key: 'authToken' });
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log("Request config:", config); // Debug request config
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
 // Define the Band type and response type

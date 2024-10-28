@@ -18,6 +18,7 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   useIonAlert,
+  IonSearchbar,
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { add, heart, heartOutline } from 'ionicons/icons';
@@ -25,37 +26,57 @@ import { Header } from '../../../components/Header';
 import { ProductContext } from '../../../api/Products/ProductContext';
 import { AddProductForm } from './Modals/AddProductForm';
 import { AuthContext } from '../../../api/Auth/AuthProvider';
-import { useWebSocket } from '../../../hooks/useWebSocket';
 import { ProductListItem } from '../../../api/Products/productTypes';
+import { getCurrentUser, User } from '../../../api/Auth/authAPI';
+import { debounce } from 'lodash'; // Add lodash debounce for better performance
 
 export const Products: React.FC = () => {
   const { products, fetching, fetchingError, setFilter, totalNumberOfRecords, toggleFavorite } = useContext(ProductContext);
-  const { loginResult } = useContext(AuthContext);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [search, setSearch] = useState('');
   const take = 10;
   const history = useHistory();
   const [alert] = useIonAlert();
-  const user = loginResult?.user;
-  const canAddProduct = user?.roles.includes('admin');
+  const canAddProduct = currentUser?.roles.includes('Admin');
 
+  // Fetch current user
   useEffect(() => {
-    if (setFilter && hasMore) {
-      setFilter({ Skip: skip, Take: take });
-    }
-  }, [setFilter, skip, take, hasMore]);
+    getCurrentUser().then(user => setCurrentUser(user));
+  }, []);
 
+  // Debounced function to set search filter
+  const debouncedSetFilter = useCallback(
+    debounce((newSearch: string) => {
+      if (setFilter) {
+        setFilter({ Skip: 0, Take: take, Search: newSearch });
+      }
+      setSkip(0); // Reset skip to 0 to reload from the start
+    }, 500),
+    [setFilter, take]
+  );
+
+  // Trigger filter whenever `skip`, `take`, or `search` changes
+  useEffect(() => {
+    if (hasMore && setFilter) {
+      setFilter({ Skip: skip, Take: take, Search: search });
+    }
+  }, [setFilter, skip, take, search, hasMore]);
+
+  // Check if more products are available
   useEffect(() => {
     if (products && totalNumberOfRecords !== undefined) {
       setHasMore(products.length < totalNumberOfRecords);
     }
   }, [products, totalNumberOfRecords]);
 
+  // Load more items when scrolled to the bottom
   const loadMoreItems = useCallback(
     (event: CustomEvent<void>) => {
       if (hasMore) {
-        setSkip((prevSkip) => prevSkip + take);
+        setSkip(prevSkip => prevSkip + take);
       }
       const target = event.target as HTMLIonInfiniteScrollElement | null;
       if (target) {
@@ -89,41 +110,29 @@ export const Products: React.FC = () => {
   };
 
   const handleFavoriteToggle = (product: ProductListItem) => {
-    // Call toggleFavorite to handle both optimistic UI update and backend request
     if (toggleFavorite) {
-      toggleFavorite(product.id, product.isFavorited ?? false)
-        .then(() => {
-          console.log(`Product ${product.id} favorite status toggled to ${!product.isFavorited}`);
-        })
-        .catch((error) => {
-          console.error('Error toggling favorite:', error);
-          alert({
-            header: 'Error',
-            message: 'Failed to update favorite status. Please try again later.',
-            buttons: ['OK'],
-          });
-        });
+      toggleFavorite(product.id, product.isFavorited ?? false);
     }
   };
 
-  useWebSocket({
-    url: 'https://localhost:60505/hubs/albumstore',
-    token: loginResult?.token,
-    onMessage: (notification) => {
-      if (notification.type === 'product') {
-        alert({
-          header: 'Product Updated',
-          message: `Product ${notification.id} has been updated.`,
-          buttons: ['OK'],
-        });
-      }
+  // Function to handle search input changes
+  const handleSearchChange = useCallback(
+    (e: CustomEvent) => {
+      const newSearch = e.detail.value!;
+      setSearch(newSearch); // Update local search state
+      debouncedSetFilter(newSearch); // Trigger debounced filter update
     },
-  });
+    [debouncedSetFilter]
+  );
 
   return (
     <IonContent>
       <Header />
-
+      <IonSearchbar
+        value={search}
+        onIonChange={handleSearchChange}
+        placeholder="Search products..."
+      />
       {fetching && skip === 0 ? (
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <IonSpinner name="crescent" />

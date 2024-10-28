@@ -1,6 +1,5 @@
-// src/contexts/ProductProvider.tsx
-
-import React, { createContext, useReducer, useEffect, useCallback, useState, useContext, useRef } from 'react';
+import { Preferences } from '@capacitor/preferences';
+import React, { createContext, useReducer, useEffect, useCallback, useContext, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { getProducts, createProduct, updateProduct, addProductToFavorites, removeProductFromFavorites } from './productAPI';
 import { AuthContext } from '../Auth/AuthProvider';
@@ -9,6 +8,8 @@ import { OnlineStatusContext } from '../Status/OnlineStatusContext';
 import { saveDataToPreferences, loadDataFromPreferences, removeDataFromPreferences } from '../../utils/storage';
 import { useWebSocket } from '../../hooks/useWebSocket';
 import { useSnackbar } from '../Snackbar/SnacbarContext';
+import { getCurrentUser, User } from '../Auth/authAPI';
+
 type SaveProductFn = (product: ProductDetail) => Promise<void>;
 
 export interface ProductState {
@@ -86,6 +87,7 @@ export const ProductContext = createContext<ProductState>(initialState);
 interface ProductProviderProps {
   children: PropTypes.ReactNodeLike;
 }
+
 export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) => {
   const { token } = useContext(AuthContext);
   const { isOnline } = useContext(OnlineStatusContext);
@@ -93,51 +95,55 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
   const [state, dispatch] = useReducer(reducer, initialState);
   const [filter, setFilter] = useState<GetAllProductsFilter>({ Skip: 0, Take: 10 });
   const dispatchThrottleRef = useRef<boolean>(false);
+  // console.log(token);
+  const [user, setUser] = useState<User | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+useEffect(() => {
+    const loadUser = async () => {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+      setUserId(currentUser?.id || null); // Store userId separately
+      console.log("User loaded:", currentUser);
+    };
+    loadUser();
+  }, []);
 
-  const MAX_LOCAL_STORAGE_ITEMS = 100;
+  // console.log(user);
 
   const fetchProducts = useCallback(async () => {
-  if (!isOnline) {
-    // Show offline status
-    alert({
-      header: 'Offline Mode',
-      message: 'You are currently offline. Showing cached products.',
-      buttons: ['OK'],
-    });
+    if (!isOnline) {
+      showSnackbar('You are offline! Showing cached products.', 'warning');
+      const cachedData = await loadDataFromPreferences<{ products: ProductDetail[]; totalNumberOfRecords: number }>('products');
+      if (cachedData) {
+        dispatch({
+          type: FETCH_PRODUCTS_SUCCEEDED,
+          payload: { products: cachedData.products, totalNumberOfRecords: cachedData.totalNumberOfRecords, reset: true },
+        });
+      } else {
+        dispatch({ type: FETCH_PRODUCTS_FAILED, payload: { error: 'Offline and no cached data available.' } });
+      }
+      return;
+    }
 
-    const cachedData = await loadDataFromPreferences<{ products: ProductDetail[]; totalNumberOfRecords: number }>('products');
-    if (cachedData) {
+    dispatch({ type: FETCH_PRODUCTS_STARTED });
+    try {
+      const result: GetAllProductsProduct = await getProducts(filter);
       dispatch({
         type: FETCH_PRODUCTS_SUCCEEDED,
-        payload: { products: cachedData.products, totalNumberOfRecords: cachedData.totalNumberOfRecords, reset: true },
+        payload: {
+          products: result.records,
+          totalNumberOfRecords: result.totalNumberOfRecords,
+          reset: filter.Skip === 0,
+        },
       });
-    } else {
-      dispatch({ type: FETCH_PRODUCTS_FAILED, payload: { error: 'Offline and no cached data available.' } });
-    }
-    return;
-  }
-
-  // Normal online fetch process
-  dispatch({ type: FETCH_PRODUCTS_STARTED });
-  try {
-    const result: GetAllProductsProduct = await getProducts(filter);
-    dispatch({
-      type: FETCH_PRODUCTS_SUCCEEDED,
-      payload: {
+      await saveDataToPreferences('products', {
         products: result.records,
         totalNumberOfRecords: result.totalNumberOfRecords,
-        reset: filter.Skip === 0,
-      },
-    });
-    await saveDataToPreferences('products', {
-      products: result.records,
-      totalNumberOfRecords: result.totalNumberOfRecords,
-    });
-  } catch (error) {
-    dispatch({ type: FETCH_PRODUCTS_FAILED, payload: { error } });
-  }
-}, [filter, isOnline]);
-
+      });
+    } catch (error) {
+      dispatch({ type: FETCH_PRODUCTS_FAILED, payload: { error } });
+    }
+  }, [filter, isOnline]);
 
   useEffect(() => {
     fetchProducts();
@@ -147,14 +153,10 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     if (isOnline && state.pendingOperations?.length) {
       for (const operation of state.pendingOperations) {
         try {
-          if (operation.type === 'SAVE_PRODUCT') {
-            if (operation.product) {
-              await saveProduct(operation.product);
-            }
-          } else if (operation.type === 'TOGGLE_FAVORITE') {
-            if (operation.productId) {
-              await toggleFavorite(operation.productId, operation.isFavorited ?? false);
-            }
+          if (operation.type === 'SAVE_PRODUCT' && operation.product) {
+            await saveProduct(operation.product);
+          } else if (operation.type === 'TOGGLE_FAVORITE' && operation.productId) {
+            await toggleFavorite(operation.productId, operation.isFavorited ?? false);
           }
           dispatch({ type: REMOVE_PENDING_OPERATION, payload: { id: operation.id } });
         } catch (error) {
@@ -172,7 +174,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
 
   const saveProduct = useCallback(async (product: ProductDetail) => {
     if (!isOnline) {
-      showSnackbar('You are offline! Your changes will be saved when you are online.', 'warning');
+      showSnackbar('You are offline! Your changes will sync when online.', 'warning');
       dispatch({ type: ADD_PENDING_OPERATION, payload: { operation: { type: 'SAVE_PRODUCT', product } } });
       return;
     }
@@ -187,56 +189,89 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
   }, [isOnline, showSnackbar]);
 
   const toggleFavorite = useCallback(async (productId: string, isFavorited: boolean) => {
-  console.log(isOnline);
     if (!isOnline) {
-    // Show an offline notification and queue the request
-   showSnackbar('You are offline! Your changes will be saved when you are online.', 'warning');
-    // Queue the request
-    dispatch({
-      type: ADD_PENDING_OPERATION,
-      payload: { operation: { type: 'TOGGLE_FAVORITE', productId, isFavorited } }
-    });
-    return;
-  }
-
-  try {
-    // Attempt the network call if online
-    if (isFavorited) {
-      await removeProductFromFavorites(productId);
-    } else {
-      await addProductToFavorites(productId);
+      showSnackbar('You are offline! Your changes will sync when online.', 'warning');
+      dispatch({
+        type: ADD_PENDING_OPERATION,
+        payload: { operation: { type: 'TOGGLE_FAVORITE', productId, isFavorited } }
+      });
+      return;
     }
-    
-    dispatch({
-      type: TOGGLE_FAVORITE,
-      payload: { productId, isFavorited: !isFavorited },
-    });
-  } catch (error) {
-    console.error('Error toggling favorite:', error);
-    showSnackbar('Failed to toggle favorite status. Please try again later.', 'error');
-    // Queue it if there's a network error
-    dispatch({
-      type: ADD_PENDING_OPERATION,
-      payload: { operation: { type: 'TOGGLE_FAVORITE', productId, isFavorited } }
-    });
+
+    try {
+      if (isFavorited) {
+        await removeProductFromFavorites(productId);
+      } else {
+        await addProductToFavorites(productId);
+      }
+      dispatch({
+        type: TOGGLE_FAVORITE,
+        payload: { productId, isFavorited: !isFavorited },
+      });
+    } catch (error) {
+      showSnackbar('Failed to toggle favorite status. Will retry later.', 'error');
+      dispatch({
+        type: ADD_PENDING_OPERATION,
+        payload: { operation: { type: 'TOGGLE_FAVORITE', productId, isFavorited } }
+      });
+    }
+  }, [isOnline, showSnackbar]);
+
+  const handleNewProduct = useCallback((product: { message: string, ProductName: string }) => {
+    if (dispatchThrottleRef.current) return;
+
+    fetchProducts(); // Re-fetch products to keep data in sync
+    showSnackbar(`New product added: ${product.ProductName}`);
+    dispatchThrottleRef.current = true;
+
+    setTimeout(() => (dispatchThrottleRef.current = false), 1000); // Throttle for 1 second
+  }, [fetchProducts, showSnackbar]);
+
+  const handleDeletedProduct = useCallback((product: { message: string, ProductName: string }) => {
+    if (dispatchThrottleRef.current) return;
+
+    fetchProducts(); // Re-fetch products to keep data in sync
+    showSnackbar(`Product deleted: ${product.ProductName}`);
+    dispatchThrottleRef.current = true;
+
+    setTimeout(() => (dispatchThrottleRef.current = false), 1000); // Throttle for 1 second
+  }, [fetchProducts, showSnackbar]);
+
+
+const handleMessage = useCallback((rawMessage: any) => {
+  console.log("------------------------------------------------------");
+  console.log('Raw message received:', rawMessage);
+  // Destructure message and validate fields
+    const message = typeof rawMessage === 'string' ? JSON.parse(rawMessage) : rawMessage;
+
+   const Type = message.Type || null;
+  const msgContent = message.Message || null;
+  const ProductName = message.ProductName || null;
+  console.log('Parsed message:', { Type, msgContent, ProductName });
+
+
+  if (Type === 'ProductAdded') {
+    console.log('Handling ProductAdded message for:', ProductName);
+    handleNewProduct({ message: msgContent, ProductName });
+  } else if (Type === 'ProductDeleted') {
+    console.log('Handling ProductDeleted message for:', ProductName);
+    handleDeletedProduct({ message: msgContent, ProductName });
+  } else {
+    console.warn('Unknown message type received:', Type);
   }
-}, [isOnline,showSnackbar]);
+  
+}, [handleNewProduct, handleDeletedProduct]);
 
+// Initialize WebSocket connection using `useWebSocket`
+const wsConfig = {
+  url: 'https://localhost:60505/hubs/albumstore',
+  token,
+  userId: userId || undefined,
+  onMessage: handleMessage,
+};
 
+useWebSocket(wsConfig);
 
-  useWebSocket({
-    url: 'https://localhost:60505/hubs/albumstore',
-    token,
-    onMessage: (product) => {
-      if (dispatchThrottleRef.current) return;
-      dispatch({ type: SAVE_PRODUCT_SUCCEEDED, payload: { product } });
-      fetchProducts();
-      dispatchThrottleRef.current = true;
-      setTimeout(() => {
-        dispatchThrottleRef.current = false;
-      }, 1000);
-    },
-  });
 
   return (
     <ProductContext.Provider value={{ ...state, saveProduct, setFilter, toggleFavorite }}>

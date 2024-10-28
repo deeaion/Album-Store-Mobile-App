@@ -1,4 +1,4 @@
-/// <reference types="vitest" />
+// <reference types="vitest" />
 
 import legacy from '@vitejs/plugin-legacy'
 import react from '@vitejs/plugin-react'
@@ -19,11 +19,6 @@ export default defineConfig({
     legacy()
   ],
 
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-  },
   build: {
     sourcemap: true, // Enable source maps for your own code
     rollupOptions: {

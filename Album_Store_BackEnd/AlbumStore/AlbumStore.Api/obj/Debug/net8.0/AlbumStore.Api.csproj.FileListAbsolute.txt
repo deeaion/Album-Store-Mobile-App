@@ -279,3 +279,4 @@ C:\Users\Deea\Desktop\Uni\github\Album-Store-Mobile-App\Album_Store_BackEnd\Albu
 C:\Users\Deea\Desktop\Uni\github\Album-Store-Mobile-App\Album_Store_BackEnd\AlbumStore\AlbumStore.Api\obj\Debug\net8.0\AlbumStore.Api.pdb
 C:\Users\Deea\Desktop\Uni\github\Album-Store-Mobile-App\Album_Store_BackEnd\AlbumStore\AlbumStore.Api\obj\Debug\net8.0\AlbumStore.Api.genruntimeconfig.cache
 C:\Users\Deea\Desktop\Uni\github\Album-Store-Mobile-App\Album_Store_BackEnd\AlbumStore\AlbumStore.Api\obj\Debug\net8.0\ref\AlbumStore.Api.dll
+C:\Users\Deea\Desktop\Uni\github\Album-Store-Mobile-App\Album_Store_BackEnd\AlbumStore\AlbumStore.Api\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

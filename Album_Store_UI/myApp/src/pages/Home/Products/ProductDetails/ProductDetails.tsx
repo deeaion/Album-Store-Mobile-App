@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { IonContent, IonItem, IonLabel, IonButton, IonSpinner, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent, IonIcon, IonCardTitle, IonCardSubtitle } from '@ionic/react';
-import { getProduct } from '../../../../api/Products/productAPI'; // API call to get product details
+import { deleteProduct, getProduct } from '../../../../api/Products/productAPI'; // API call to get product details
 import { arrowBackOutline } from 'ionicons/icons';
 import { ProductDetail } from '../../../../api/Products/productTypes';
+import { ProductContext } from '../../../../api/Products/ProductContext';
+import { AuthContext } from '../../../../api/Auth/AuthProvider';
+import { getCurrentUser, User } from '../../../../api/Auth/authAPI';
 
 type ProductVersion = {
   id: string;
@@ -21,6 +24,11 @@ export const ProductDetails = () => {
   const [product, setProduct] = useState<ProductDetail | null>(null);  // State to hold product details
   const [loading, setLoading] = useState(true);
   const history = useHistory();  // Initialize history to go back
+   const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    getCurrentUser().then(user => setCurrentUser(user));
+  }, []);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -45,6 +53,20 @@ export const ProductDetails = () => {
     return <p>Product not found.</p>;
   }
 
+ 
+  function handleDelete(id: string): void {
+    // call delete api from context
+   deleteProduct(id).then((response) => {
+      console.log(response);
+      // redirect to products
+      history.push('/products');
+     
+   }).catch((error) => {
+      console.log(error);
+   });
+
+  }
+
   return (
     <IonContent>
       <IonGrid>
@@ -57,6 +79,12 @@ export const ProductDetails = () => {
             <h2>
                 {product.name} - {product.bandName ? product.bandName : 'Unknown Band'}
             </h2>
+            {/* if admin product delete button */}
+            {currentUser?.roles?.includes('Admin') && (
+              <IonButton color="danger" onClick={() => handleDelete(product.id)}>
+              Delete
+              </IonButton>
+            )}
         </div>
 
         {/* Product Details Card */}

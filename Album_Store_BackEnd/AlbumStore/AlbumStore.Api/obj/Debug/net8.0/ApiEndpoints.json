@@ -236,6 +236,16 @@
     ]
   },
   {
+    "ContainingType": "AlbumStore.Api.Controllers.HealthController",
+    "Method": "GetHealth",
+    "RelativePath": "api/Health/health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AlbumStore.Api.Controllers.ProductController",
     "Method": "CreateProduct",
     "RelativePath": "api/Product",

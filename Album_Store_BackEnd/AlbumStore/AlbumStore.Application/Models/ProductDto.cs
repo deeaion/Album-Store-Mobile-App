@@ -22,5 +22,6 @@ namespace AlbumStore.Application.Filtering
         public Boolean IsFavorited { get; set; }
 
 
+
     }
 }

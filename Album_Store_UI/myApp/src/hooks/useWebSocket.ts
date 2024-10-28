@@ -1,75 +1,114 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import * as signalR from '@microsoft/signalr';
 import { Network } from '@capacitor/network';
-import { getLogger } from '../utils/logger';
 import { useSnackbar } from '../api/Snackbar/SnacbarContext';
-
-const log = getLogger('useSignalRWebSocket');
+import { OnlineStatusContext } from '../api/Status/OnlineStatusContext';
 
 interface SignalROptions {
   url: string;
   token?: string;
+  userId?: string;
   onMessage?: (product: any) => void;
 }
 
-export const useWebSocket = ({ url, token, onMessage }: SignalROptions) => {
+export const useWebSocket = ({ url, token, userId = '', onMessage }: SignalROptions) => {
   const { showSnackbar } = useSnackbar();
+  const { isOnline } = useContext(OnlineStatusContext);
   const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<'connected' | 'connecting' | 'disconnected' | 'offline' | 'reconnecting'>('disconnected');
   const reconnectAttempts = useRef(0);
+
+  const keepAliveInterval = 50000;
   const maxReconnectAttempts = 5;
+  const minRetryDelay = 15000;
+  const maxRetryDelay = 60000;
+  
+  const keepAliveRef = useRef<NodeJS.Timeout | null>(null);
   const lastMessageRef = useRef<string | null>(null);
 
-  // Check network status using Capacitor's Network API
-  const initializeNetworkStatus = useCallback(async () => {
-    const status = await Network.getStatus();
-    if (!status.connected) {
-      setConnectionStatus('offline');
-      connection?.stop();  // Stop SignalR connection when offline
-    }
-  }, [connection]);
-
   useEffect(() => {
+       if (!userId) {
+      // console.log('Skipping WebSocket connection as userId is not available.');
+      return;
+    }
+    const initializeNetworkStatus = async () => {
+      const status = await Network.getStatus();
+      setConnectionStatus(status.connected ? 'connecting' : 'offline');
+      // console.log(`Network initialized with status: ${status.connected ? 'Online' : 'Offline'}`);
+    };
+
     initializeNetworkStatus();
 
     const setupNetworkListener = async () => {
       const networkListener = await Network.addListener('networkStatusChange', (status) => {
+        // console.log(`Network status changed: ${status.connected ? 'Online' : 'Offline'}`);
         if (status.connected) {
           setConnectionStatus('connecting');
-          startConnection();  // Attempt to start SignalR connection when online
+          startConnection();
         } else {
           setConnectionStatus('offline');
-          connection?.stop();  // Stop SignalR connection when offline
+          connection?.stop();
         }
       });
-      
       return networkListener;
     };
 
     let networkListenerHandle: any;
-
     setupNetworkListener().then((handle) => {
       networkListenerHandle = handle;
     });
 
-    return () => {
-      networkListenerHandle?.remove(); // Cleanup listener on unmount
+   return () => {
+      networkListenerHandle?.remove();
     };
-  }, [connection, initializeNetworkStatus]);
+  }, [userId]); // Add userId as a dependency here
+
+  const startKeepAlive = (hubConnection: signalR.HubConnection) => {
+    stopKeepAlive();
+    keepAliveRef.current = setInterval(() => {
+      if (hubConnection.state === signalR.HubConnectionState.Connected) {
+        hubConnection.invoke('Ping').catch((err) => console.log('Keep-alive ping failed:', err));
+      }
+    }, keepAliveInterval);
+  };
+
+  const stopKeepAlive = () => {
+    if (keepAliveRef.current) {
+      clearInterval(keepAliveRef.current);
+      keepAliveRef.current = null;
+    }
+  };
 
   const startConnection = useCallback(async () => {
-    if (!url || connectionStatus === 'offline' || reconnectAttempts.current >= maxReconnectAttempts) return;
+    // console.log('startConnection');
+    if (!url || reconnectAttempts.current >= maxReconnectAttempts) {
+      // console.log(`Skipping connection start. url=${url}, connectionStatus=${connectionStatus}, reconnectAttempts=${reconnectAttempts.current}`);
+      return;
+    }
+
+    if (!userId) {
+      // console.log('No userId provided, connection cannot be started.');
+      return;
+    }
+
+    if (!token) {
+      // console.log('No token provided, connection cannot be started.');
+      return;
+    }
 
     setConnectionStatus('connecting');
-    log.log('Attempting to start SignalR connection...');
+    // console.log('Attempting to start SignalR connection...');
+
+    const fullUrl = `${url}?userId=${encodeURIComponent(userId)}`;
+    // console.log(`Connecting to: ${fullUrl}`);
 
     const hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(url, {
+      .withUrl(fullUrl, {
         accessTokenFactory: () => token || '',
         transport: signalR.HttpTransportType.WebSockets,
       })
+      .configureLogging(signalR.LogLevel.Trace)
       .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)
       .build();
 
     const setupListeners = () => {
@@ -77,7 +116,7 @@ export const useWebSocket = ({ url, token, onMessage }: SignalROptions) => {
       hubConnection.on('ReceiveMessage', (product) => {
         const messageString = JSON.stringify(product);
         if (messageString !== lastMessageRef.current) {
-          log.log('New message received:', product);
+          // console.log('New message received:', product);
           onMessage?.(product);
           showSnackbar(`New Product Added: ${product.name}`, 'success');
           lastMessageRef.current = messageString;
@@ -89,22 +128,33 @@ export const useWebSocket = ({ url, token, onMessage }: SignalROptions) => {
 
     hubConnection.onreconnecting((err) => {
       reconnectAttempts.current += 1;
-      log.log('Reconnecting due to error:', err);
-      setConnectionStatus('reconnecting');  // Set to reconnecting when SignalR is trying to reconnect
+      // console.log('Reconnecting due to error:', err);
+      setConnectionStatus('reconnecting');
+      stopKeepAlive();
     });
 
     hubConnection.onreconnected(() => {
-      log.log('Reconnected to SignalR WebSocket');
+      // console.log('Reconnected to SignalR WebSocket');
       reconnectAttempts.current = 0;
       setConnectionStatus('connected');
       setupListeners();
+      startKeepAlive(hubConnection);
     });
 
     hubConnection.onclose((err) => {
-      log.log('Connection closed', err);
+      // console.log('Connection closed', err);
+       console.log('Connection closed. Error:', err);
       setConnectionStatus('disconnected');
+      stopKeepAlive();
+
+      const retryDelay = Math.min(minRetryDelay * (2 ** reconnectAttempts.current), maxRetryDelay);
+      reconnectAttempts.current = Math.min(reconnectAttempts.current + 1, maxReconnectAttempts);
+
       if (reconnectAttempts.current < maxReconnectAttempts) {
-        setTimeout(startConnection, 30000);
+        // console.log(`Retrying connection in ${retryDelay / 1000} seconds...`);
+        setTimeout(startConnection, retryDelay);
+      } else {
+        // console.log('Max retries reached, stopping further attempts.');
       }
     });
 
@@ -112,24 +162,34 @@ export const useWebSocket = ({ url, token, onMessage }: SignalROptions) => {
       await hubConnection.start();
       setConnection(hubConnection);
       setConnectionStatus('connected');
-      log.log('Connected to SignalR WebSocket');
+      // console.log('Connected to SignalR WebSocket');
+      startKeepAlive(hubConnection);
     } catch (err) {
-      log.log('Error connecting to SignalR:', err);
+      // console.log('Error connecting to SignalR:', err);
       setConnectionStatus('disconnected');
+      const retryDelay = Math.min(minRetryDelay * (2 ** reconnectAttempts.current), maxRetryDelay);
       if (reconnectAttempts.current < maxReconnectAttempts) {
-        setTimeout(startConnection, 30000);
+        setTimeout(startConnection, retryDelay);
       }
     }
-  }, [url, token, onMessage, showSnackbar, connectionStatus]);
+  }, [url, token, userId, onMessage, showSnackbar]);
 
   useEffect(() => {
-    if (connectionStatus === 'connecting' && token) {
+    // console.log('useEffect connectionStatus', connectionStatus);
+    if (connectionStatus === 'disconnected' && token && userId) {
+      // console.log(`Starting connection with userId: ${userId}`);
       startConnection();
+    } else if (!userId) {
+      // console.log('Connection not started - userId is undefined');
     }
+
     return () => {
-      connection?.stop().then(() => log.log('SignalR connection stopped'));
+      if (connection) {
+        connection.stop().then(() => console.log('SignalR connection stopped'));
+      }
+      stopKeepAlive();
     };
-  }, [connectionStatus, startConnection, token]);
+  }, [connectionStatus, startConnection, token, userId]);
 
   return { connection, connectionStatus };
 };

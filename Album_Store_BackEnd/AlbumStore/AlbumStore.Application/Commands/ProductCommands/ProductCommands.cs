@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AlbumStore.Application.Common;
 using AlbumStore.Application.Filtering;
+using AlbumStore.Application.Models;
 
 namespace AlbumStore.Application.Commands.ProductCommands;
 
@@ -16,7 +17,7 @@ public class UpdateProductCommand : BaseRequest<CommandResponse>
 {
     public ProductDto ProductDto { get; set; }
 }
-public class DeleteProductCommand : BaseRequest<CommandResponse>
+public class DeleteProductCommand : BaseRequest<CommandResponse<ProductDeletedDto>>
 {
     public Guid Id { get; set; }
 }

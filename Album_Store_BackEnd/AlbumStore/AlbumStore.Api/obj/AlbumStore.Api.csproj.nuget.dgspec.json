@@ -409,6 +409,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.AspNetCore.Http.Connections": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
             "Microsoft.AspNetCore.SignalR.Core": {
               "target": "Package",
               "version": "[1.0.15, )"

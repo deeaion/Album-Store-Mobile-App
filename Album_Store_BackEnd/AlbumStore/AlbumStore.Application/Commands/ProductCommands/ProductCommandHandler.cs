@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AlbumStore.Application.Common;
+using AlbumStore.Application.Models;
 using AlbumStore.Common.Identity;
 using AlbumStore.Domain.Entities;
 using AlbumStore.Domain.Repositories;
@@ -21,7 +22,7 @@ namespace AlbumStore.Application.Commands.ProductCommands
         ILogRepository<ProductCommandHandler> logRepository) :
         IRequestHandler<CreateProductCommand, CommandResponse>,
         IRequestHandler<UpdateProductCommand, CommandResponse>,
-        IRequestHandler<DeleteProductCommand, CommandResponse>,
+        IRequestHandler<DeleteProductCommand, CommandResponse<ProductDeletedDto>>,
         IRequestHandler<AddFavoriteProductCommand, CommandResponse>,
         IRequestHandler<RemoveFavoriteProductCommand, CommandResponse>
     {
@@ -72,25 +73,36 @@ namespace AlbumStore.Application.Commands.ProductCommands
                 Genre = Enum.Parse<Genre>(request.ProductDto.Genre.ToString()),
                 Artists = artists,
                 CreatedBy = user,
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.UtcNow // Use UTC
             };
+
             _repository.Add(product);
             await _repository.SaveChangesAsync(cancellationToken);
             return CommandResponse.Ok();
         }
 
-        public async Task<CommandResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<ProductDeletedDto>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            Product product = await _repository.Query(p => p.Id == request.Id).FirstOrDefaultAsync();
+            Product? product = await _repository.Query(p => p.Id == request.Id).Include(p=>p.UsersWhoLikeThisProduct).FirstOrDefaultAsync();
             if (product == null)
             {
-                return CommandResponse.Failed(new[] { "There is no Product with that Id!" });
-
+                return (CommandResponse<ProductDeletedDto>)CommandResponse<ProductDeletedDto>.Failed(new[] { "There is no Product with that Id!" });
             }
+
+            ProductDeletedDto productDeletedDto = new ProductDeletedDto()
+            {
+                Id = product.Id.ToString(),
+                Name = product.Name,
+                UsersWhoFavoritedIt = product.UsersWhoLikeThisProduct?.Select(u => u.Id).ToList() ?? new List<string>()
+            };
+
+            //fac copie
             _repository.Remove(product);
             await _repository.SaveChangesAsync(cancellationToken);
-            return CommandResponse.Ok();
+
+            return CommandResponse.Ok(productDeletedDto); // Updated to use CommandResponse.Ok()
         }
+
         private async Task<List<Artist>> GetArtists(List<Guid> artistIds)
         {
             List<Artist> artists = new List<Artist>();
@@ -164,6 +176,8 @@ namespace AlbumStore.Application.Commands.ProductCommands
             }
 
             // Remove the user from the product's UsersWhoLikeThisProduct collection
+            // fac copie la lista de useri care au dat like la produs
+
             product.UsersWhoLikeThisProduct.Remove(user);
 
             // Save changes to update the database

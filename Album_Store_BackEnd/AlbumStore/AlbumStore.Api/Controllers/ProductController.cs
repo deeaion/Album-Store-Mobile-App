@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using AlbumStore.Application.Commands.ProductCommands;
 using AlbumStore.Application.Filtering;
+using AlbumStore.Application.Models;
 using AlbumStore.Application.Queries.ProductQueries;
 using AlbumStore.Application.QueryProjections;
 using MediatR;
@@ -88,13 +89,49 @@ public class ProductController : BaseController
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
     {
-        CommandResponse commandResponse = await Mediator.Send(new DeleteProductCommand { Id = id },
+        CommandResponse<ProductDeletedDto> commandResponse = await Mediator.Send(new DeleteProductCommand { Id = id },
             new CancellationToken());
+        // Notify clients that have put as favorite the product
         if (commandResponse.IsValid)
+        {
+            var productNotification = new
+            {
+                Type = "ProductDeleted",
+                Message = "A product in your wishlist was removed from our site",
+                ProductName = commandResponse.Result.Name
+            };
+
+            string notificationMessage = JsonConvert.SerializeObject(productNotification);
+
+            // Send the notification message to all connected clients via SignalR
+            var usersToNotify = commandResponse.Result.UsersWhoFavoritedIt;
+            Console.WriteLine("Users who are:");
+
+            foreach (var VARIABLE in usersToNotify)
+            {
+                Console.WriteLine(VARIABLE);
+            }
+            foreach (var userId in usersToNotify)
+            {
+                var connections = AlbumStoreHub.GetConnectionsForUser(userId);
+                if (connections.Any())
+                {
+                    foreach (var connectionId in connections)
+                    {
+                        await _hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", notificationMessage);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"No active connections found for user: {userId}");
+                }
+            }
             return Ok(commandResponse);
+        }
 
         return BadRequest(commandResponse);
     }
+
 
     [HttpGet("")]
     [Authorize(AuthenticationSchemes = "Bearer")]
