@@ -217,50 +217,53 @@ useEffect(() => {
     }
   }, [isOnline, showSnackbar]);
 
-  const handleNewProduct = useCallback((product: { message: string, ProductName: string }) => {
-    if (dispatchThrottleRef.current) return;
+  const newProductThrottleRef = useRef<boolean>(false);
+const deletedProductThrottleRef = useRef<boolean>(false);
+const throttledFetchProducts = useCallback(() => {
+  if (dispatchThrottleRef.current) return;
+  dispatchThrottleRef.current = true;
+  fetchProducts();
+  setTimeout(() => (dispatchThrottleRef.current = false), 1000); // Reset throttle after 1 second
+}, [fetchProducts]);
 
-    fetchProducts(); // Re-fetch products to keep data in sync
-    showSnackbar(`New product added: ${product.ProductName}`);
-    dispatchThrottleRef.current = true;
+const handleNewProduct = useCallback((product: { message: string, ProductName: string }) => {
+  console.log('Handling new product:', product);
+  throttledFetchProducts();
+  console.log("New product added: ", product.ProductName);
+  showSnackbar(`New product added: ${product.ProductName}`, 'success');
+}, [throttledFetchProducts, showSnackbar]);
 
-    setTimeout(() => (dispatchThrottleRef.current = false), 1000); // Throttle for 1 second
-  }, [fetchProducts, showSnackbar]);
+const handleDeletedProduct = useCallback((product: { message: string, ProductName: string }) => {
+  console.log('Handling deleted product message:', product);
+  throttledFetchProducts();
+  console.log("Product deleted: ", product.ProductName);
+  showSnackbar(`Product deleted: ${product.ProductName}`, 'warning');
+}, [throttledFetchProducts, showSnackbar]);
 
-  const handleDeletedProduct = useCallback((product: { message: string, ProductName: string }) => {
-    if (dispatchThrottleRef.current) return;
 
-    fetchProducts(); // Re-fetch products to keep data in sync
-    showSnackbar(`Product deleted: ${product.ProductName}`);
-    dispatchThrottleRef.current = true;
-
-    setTimeout(() => (dispatchThrottleRef.current = false), 1000); // Throttle for 1 second
-  }, [fetchProducts, showSnackbar]);
 
 
 const handleMessage = useCallback((rawMessage: any) => {
   console.log("------------------------------------------------------");
   console.log('Raw message received:', rawMessage);
-  // Destructure message and validate fields
-    const message = typeof rawMessage === 'string' ? JSON.parse(rawMessage) : rawMessage;
 
-   const Type = message.Type || null;
+  const message = typeof rawMessage === 'string' ? JSON.parse(rawMessage) : rawMessage;
+  const Type = message.Type || null;
   const msgContent = message.Message || null;
   const ProductName = message.ProductName || null;
   console.log('Parsed message:', { Type, msgContent, ProductName });
 
-
   if (Type === 'ProductAdded') {
-    console.log('Handling ProductAdded message for:', ProductName);
+    console.log('Triggering handleNewProduct for:', ProductName);
     handleNewProduct({ message: msgContent, ProductName });
   } else if (Type === 'ProductDeleted') {
-    console.log('Handling ProductDeleted message for:', ProductName);
+    console.log('Triggering handleDeletedProduct for:', ProductName);
     handleDeletedProduct({ message: msgContent, ProductName });
   } else {
     console.warn('Unknown message type received:', Type);
   }
-  
 }, [handleNewProduct, handleDeletedProduct]);
+
 
 // Initialize WebSocket connection using `useWebSocket`
 const wsConfig = {

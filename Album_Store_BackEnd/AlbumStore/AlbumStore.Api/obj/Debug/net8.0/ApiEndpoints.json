@@ -373,6 +373,11 @@
         "IsRequired": false
       },
       {
+        "Name": "BandName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "User.UserId",
         "Type": "System.String",
         "IsRequired": false

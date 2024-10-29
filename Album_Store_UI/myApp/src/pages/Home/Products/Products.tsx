@@ -19,6 +19,8 @@ import {
   IonInfiniteScrollContent,
   useIonAlert,
   IonSearchbar,
+  IonSelect,
+  IonSelectOption,
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { add, heart, heartOutline } from 'ionicons/icons';
@@ -28,7 +30,7 @@ import { AddProductForm } from './Modals/AddProductForm';
 import { AuthContext } from '../../../api/Auth/AuthProvider';
 import { ProductListItem } from '../../../api/Products/productTypes';
 import { getCurrentUser, User } from '../../../api/Auth/authAPI';
-import { debounce } from 'lodash'; // Add lodash debounce for better performance
+import { Band, getBands } from '../../../api/Band/bandAPI';
 
 export const Products: React.FC = () => {
   const { products, fetching, fetchingError, setFilter, totalNumberOfRecords, toggleFavorite } = useContext(ProductContext);
@@ -37,33 +39,34 @@ export const Products: React.FC = () => {
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [search, setSearch] = useState('');
+  const [bandFilter, setBandFilter] = useState<string | undefined>(undefined);
   const take = 10;
   const history = useHistory();
   const [alert] = useIonAlert();
+  const [bands, setBands] = useState<Band[]>([]);
   const canAddProduct = currentUser?.roles.includes('Admin');
+
+  // Fetch bands on component mount
+  useEffect(() => {
+    const fetchBands = async () => {
+      const result = await getBands();
+      setBands(result.records || []);
+    };
+    fetchBands();
+  }, []);
 
   // Fetch current user
   useEffect(() => {
     getCurrentUser().then(user => setCurrentUser(user));
   }, []);
 
-  // Debounced function to set search filter
-  const debouncedSetFilter = useCallback(
-    debounce((newSearch: string) => {
-      if (setFilter) {
-        setFilter({ Skip: 0, Take: take, Search: newSearch });
-      }
-      setSkip(0); // Reset skip to 0 to reload from the start
-    }, 500),
-    [setFilter, take]
-  );
-
-  // Trigger filter whenever `skip`, `take`, or `search` changes
+  // Trigger filter whenever `skip`, `take`, `search`, or `bandFilter` changes
   useEffect(() => {
-    if (hasMore && setFilter) {
-      setFilter({ Skip: skip, Take: take, Search: search });
+    if (setFilter) {
+      console.log('Applying filter with parameters:', { Skip: skip, Take: take, Search: search, BandName: bandFilter });
+      setFilter({ Skip: skip, Take: take, Search: search, BandName: bandFilter });
     }
-  }, [setFilter, skip, take, search, hasMore]);
+  }, [setFilter, skip, take, search, bandFilter]);
 
   // Check if more products are available
   useEffect(() => {
@@ -120,9 +123,19 @@ export const Products: React.FC = () => {
     (e: CustomEvent) => {
       const newSearch = e.detail.value!;
       setSearch(newSearch); // Update local search state
-      debouncedSetFilter(newSearch); // Trigger debounced filter update
+      setSkip(0); // Reset pagination
     },
-    [debouncedSetFilter]
+    []
+  );
+
+  // Function to handle band selection changes
+  const handleBandSelectedChange = useCallback(
+    (e: CustomEvent) => {
+      const selectedBand = e.detail.value;
+      setBandFilter(selectedBand); // Update band filter state
+      setSkip(0); // Reset pagination
+    },
+    []
   );
 
   return (
@@ -133,6 +146,15 @@ export const Products: React.FC = () => {
         onIonChange={handleSearchChange}
         placeholder="Search products..."
       />
+      <IonSelect placeholder="Select Band" onIonChange={handleBandSelectedChange} value={bandFilter}>
+        <IonSelectOption value={''}>None</IonSelectOption>
+        {bands.map((band) => (
+          <IonSelectOption key={band.id} value={band.name}>
+        {band.name}
+          </IonSelectOption>
+        ))}
+      </IonSelect>
+
       {fetching && skip === 0 ? (
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <IonSpinner name="crescent" />

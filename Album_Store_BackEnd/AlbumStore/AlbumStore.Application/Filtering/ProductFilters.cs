@@ -30,6 +30,11 @@ namespace AlbumStore.Application.Filtering
                 productsQuery = productsQuery.Where(p => p.Artists.Any(a => a.Id == query.ArtistId));
             }
 
+            if (!string.IsNullOrEmpty(query.BandName))
+            {
+                productsQuery = productsQuery.Where(p => p.Band != null && p.Band.Name == query.BandName);
+            }
+
             return productsQuery;
         }
     }

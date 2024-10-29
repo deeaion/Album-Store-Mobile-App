@@ -31,6 +31,13 @@ public class GetFilteredProductsQueries : BaseRequest<CollectionResponse<Product
         set;
     }
 
+    public string? BandName
+    {
+        get;
+        set;
+
+    }
+
 }
 public class GetProductQuery : BaseRequest<ProductDto>
 {

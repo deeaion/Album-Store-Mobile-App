@@ -54,4 +54,5 @@ export type GetAllProductsFilter = Partial<{
   ArtistName: string;
   Genre: string;
   ArtistId: string;
+  BandName:string;
 }>;

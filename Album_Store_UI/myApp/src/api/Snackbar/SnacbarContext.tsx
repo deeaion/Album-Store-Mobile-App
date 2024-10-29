@@ -16,13 +16,22 @@ export const SnackbarProvider: React.FC<{ children: ReactNode }> = ({ children }
     severity: 'info',
   });
 
-  const showSnackbar = (message: string, severity: 'success' | 'error' | 'warning' | 'info' = 'info') => {
-    setSnackbar({ message, open: true, severity });
-  };
+// SnackbarContext.tsx
+const showSnackbar = (message: string, severity: 'success' | 'error' | 'warning' | 'info' = 'info') => {
+  // Prevent snackbar from showing if the message is undefined
+  if (!message || message.includes("undefined")) {
+    console.log("Blocked snackbar with undefined message:", message); // Debugging line
+    return;
+  }
+  console.log("showSnackbar", message, severity); // Log only intended messages
+  setSnackbar({ message, open: true, severity });
+};
 
-  const handleClose = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
+
+// SnackbarContext.tsx
+const handleClose = () => {
+  setSnackbar({ message: '', open: false, severity: 'info' }); // Reset message and state on close
+};
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar }}>
