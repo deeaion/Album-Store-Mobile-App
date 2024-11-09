@@ -6,7 +6,7 @@ public class Order
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime FinishedAt { get; set; }
-    public int TotalPrice { get; set; }
+    public double TotalPrice { get; set; }
     public Status Status { get; set; }
     //link to user
     public virtual string UserId { get; set; }
@@ -16,6 +16,8 @@ public class Order
     //link to adress
     public virtual Guid AddressId { get; set; }
     public virtual Address Address { get; set; }
+    public string AddressShort { get; set; }
+
     public Order()
     {
         ProductOrders = [];

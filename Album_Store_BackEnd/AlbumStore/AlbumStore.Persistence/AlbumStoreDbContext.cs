@@ -19,6 +19,8 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
     public DbSet<ApplicationLog> ApplicationLogs { get; set; }
     public DbSet<ProductBasket> ProductBaskets { get; set; }
     public DbSet<UserBasket> UserBaskets { get; set; }
+    public DbSet<CollectionItem> CollectionItems { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,7 +36,22 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
         ConfigureRole(modelBuilder);
         ConfigureUserBasket(modelBuilder);
         ConfigureProductBasket(modelBuilder);
+        ConfigureCollectionItem(modelBuilder);
+        ConfigureImages(modelBuilder);
         modelBuilder.SeedForRoles();
+    }
+
+    private void ConfigureImages(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Image>().Property(i => i.Id).ValueGeneratedNever();
+    }
+
+    private void ConfigureCollectionItem(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CollectionItem>().Property(ci => ci.Id).ValueGeneratedNever();
+        modelBuilder.Entity<CollectionItem>().HasOne(ci => ci.Product).WithMany().HasForeignKey(ci => ci.ProductId);
+        modelBuilder.Entity<CollectionItem>().HasOne(ci => ci.User).WithMany(u => u.CollectionItems).HasForeignKey(ci => ci.UserId);
+        modelBuilder.Entity<CollectionItem>().HasOne(ci => ci.Image).WithMany().HasForeignKey(ci => ci.ImageId);
     }
 
     private void ConfigureProductBasket(ModelBuilder modelBuilder)
@@ -115,7 +132,7 @@ j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").OnDelete(Del
                 j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").HasConstraintName("FK_UserFavoriteBand_UserId"));
         // configure user basket
         builder.Entity<ApplicationUser>().HasOne(u => u.UserBasket).WithOne(ub => ub.User).HasForeignKey<UserBasket>(ub => ub.UserId).OnDelete(DeleteBehavior.Cascade);
-
+        builder.Entity<ApplicationUser>().HasMany(u => u.CollectionItems).WithOne(ci => ci.User).HasForeignKey(ci => ci.UserId);
     }
 
 

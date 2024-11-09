@@ -234,6 +234,62 @@ namespace AlbumStore.Persistence.Migrations
                     b.ToTable("Bands");
                 });
 
+            modelBuilder.Entity("AlbumStore.Domain.Entities.CollectionItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Artist")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CollectionItems");
+                });
+
+            modelBuilder.Entity("AlbumStore.Domain.Entities.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("AlbumStore.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -241,6 +297,10 @@ namespace AlbumStore.Persistence.Migrations
 
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("AddressShort")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -628,6 +688,29 @@ namespace AlbumStore.Persistence.Migrations
                     b.Navigation("Address");
                 });
 
+            modelBuilder.Entity("AlbumStore.Domain.Entities.CollectionItem", b =>
+                {
+                    b.HasOne("AlbumStore.Domain.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("AlbumStore.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("AlbumStore.Domain.Entities.ApplicationUser", "User")
+                        .WithMany("CollectionItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AlbumStore.Domain.Entities.Order", b =>
                 {
                     b.HasOne("AlbumStore.Domain.Entities.Address", "Address")
@@ -837,6 +920,8 @@ namespace AlbumStore.Persistence.Migrations
 
             modelBuilder.Entity("AlbumStore.Domain.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("CollectionItems");
+
                     b.Navigation("Orders");
 
                     b.Navigation("UserBasket");

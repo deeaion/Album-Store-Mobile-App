@@ -15,10 +15,12 @@ namespace AlbumStore.Domain.Entities
         public virtual ICollection<Product> FavoriteProducts { get; set; }
         public virtual ICollection<Band> FavoriteBands { get; set; }
         public virtual UserBasket? UserBasket { get; set; }
+        public virtual ICollection<CollectionItem> CollectionItems { get; set; }
 
         public ApplicationUser()
         {
             UserRoles = [];
+            CollectionItems = [];
             Orders = [];
         }
     }

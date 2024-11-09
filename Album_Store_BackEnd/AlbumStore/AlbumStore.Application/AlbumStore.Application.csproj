@@ -10,7 +10,6 @@
       <Folder Include="Commands\ArtistCommands\" />
       <Folder Include="Commands\BandCommands\" />
       <Folder Include="Commands\ProductOrderCommands\" />
-      <Folder Include="Commands\OrderCommands\" />
       <Folder Include="Queries\ProductVersionQueries\" />
     </ItemGroup>
 

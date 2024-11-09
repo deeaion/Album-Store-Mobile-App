@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlbumStore.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5ff117764e84efdb6246d39ac4f75158126ca76")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52cce8c0b8cd04e8b4446802f873b7a3b301fbd5")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlbumStore.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlbumStore.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
