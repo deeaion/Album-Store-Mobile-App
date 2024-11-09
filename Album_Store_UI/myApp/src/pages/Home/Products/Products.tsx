@@ -45,6 +45,7 @@ export const Products: React.FC = () => {
   const [alert] = useIonAlert();
   const [bands, setBands] = useState<Band[]>([]);
   const canAddProduct = currentUser?.roles.includes('Admin');
+  const [filteredProducts, setFilteredProducts] = useState<ProductListItem[]>([]);
 
   // Fetch bands on component mount
   useEffect(() => {
@@ -60,20 +61,24 @@ export const Products: React.FC = () => {
     getCurrentUser().then(user => setCurrentUser(user));
   }, []);
 
-  // Trigger filter whenever `skip`, `take`, `search`, or `bandFilter` changes
+  // Trigger filter whenever `skip`, `take`, or `search` changes
   useEffect(() => {
     if (setFilter) {
-      console.log('Applying filter with parameters:', { Skip: skip, Take: take, Search: search, BandName: bandFilter });
-      setFilter({ Skip: skip, Take: take, Search: search, BandName: bandFilter });
+      console.log('Applying filter with parameters:', { Skip: skip, Take: take, Search: search });
+      setFilter({ Skip: skip, Take: take, Search: search }); // Only use `skip`, `take`, and `search` in backend filter
     }
-  }, [setFilter, skip, take, search, bandFilter]);
+  }, [setFilter, skip, take, search]);
 
-  // Check if more products are available
+  // Update `filteredProducts` locally whenever `products` or `bandFilter` changes
   useEffect(() => {
-    if (products && totalNumberOfRecords !== undefined) {
-      setHasMore(products.length < totalNumberOfRecords);
+    if (products) {
+      const filtered = bandFilter
+        ? products.filter(product => product.bandName === bandFilter) // Local filtering by band
+        : products;
+      setFilteredProducts(filtered);
+      setHasMore(filtered.length < (totalNumberOfRecords ?? 0));
     }
-  }, [products, totalNumberOfRecords]);
+  }, [products, bandFilter, totalNumberOfRecords]);
 
   // Load more items when scrolled to the bottom
   const loadMoreItems = useCallback(
@@ -132,7 +137,7 @@ export const Products: React.FC = () => {
   const handleBandSelectedChange = useCallback(
     (e: CustomEvent) => {
       const selectedBand = e.detail.value;
-      setBandFilter(selectedBand); // Update band filter state
+      setBandFilter(selectedBand || undefined); // Update band filter state
       setSkip(0); // Reset pagination
     },
     []
@@ -150,7 +155,7 @@ export const Products: React.FC = () => {
         <IonSelectOption value={''}>None</IonSelectOption>
         {bands.map((band) => (
           <IonSelectOption key={band.id} value={band.name}>
-        {band.name}
+            {band.name}
           </IonSelectOption>
         ))}
       </IonSelect>
@@ -166,8 +171,8 @@ export const Products: React.FC = () => {
         </p>
       ) : (
         <IonGrid>
-          {Array.isArray(products) && products.length > 0 ? (
-            products.map((product) => (
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
               <IonRow key={product.id} onClick={() => handleProductClick(product.id)}>
                 <IonCol size="12">
                   <IonItem button>

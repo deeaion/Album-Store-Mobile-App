@@ -9,6 +9,7 @@ using AlbumStore.Application.Filtering;
 using AlbumStore.Application.Models;
 using AlbumStore.Application.Queries.ProductQueries;
 using AlbumStore.Application.QueryProjections;
+using AlbumStore.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using AlbumStore.Infrastructure.WebSockets;
@@ -162,7 +163,7 @@ public class ProductController : BaseController
         return BadRequest(commandResponse);
     }
     // remove product from favorite
-    [HttpDelete("Favorite")]
+    [HttpDelete("Favorite")] 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]

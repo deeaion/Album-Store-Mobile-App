@@ -10,9 +10,12 @@ namespace AlbumStore.Application.Filtering
 {
     public static class ProductFilters
     {
+       
         public static IQueryable<Product> ApplyFilter(this IQueryable<Product> productsQuery, GetFilteredProductsQueries query)
 
         {
+        
+
             if (!string.IsNullOrEmpty(query.Search))
             {
                 productsQuery = productsQuery.Where(p => p.Name.Contains(query.Search));
@@ -37,5 +40,10 @@ namespace AlbumStore.Application.Filtering
 
             return productsQuery;
         }
+        public static IQueryable<Product> ApplyFilter(this IQueryable<Product> productsQuery, GetProductQuery query)
+        {
+            return productsQuery.Where(p => p.Id == query.Id);
+        }
+      
     }
 }

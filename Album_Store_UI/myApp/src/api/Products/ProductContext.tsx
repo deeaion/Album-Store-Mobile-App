@@ -256,9 +256,11 @@ const handleMessage = useCallback((rawMessage: any) => {
   if (Type === 'ProductAdded') {
     console.log('Triggering handleNewProduct for:', ProductName);
     handleNewProduct({ message: msgContent, ProductName });
+    return ;
   } else if (Type === 'ProductDeleted') {
     console.log('Triggering handleDeletedProduct for:', ProductName);
     handleDeletedProduct({ message: msgContent, ProductName });
+    return;
   } else {
     console.warn('Unknown message type received:', Type);
   }

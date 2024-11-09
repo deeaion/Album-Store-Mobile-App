@@ -23,5 +23,6 @@ namespace AlbumStore.Application.QueryProjections.Mappers
                 IsFavorited = p.UsersWhoLikeThisProduct.Any(u => u.Id == currentUserId)
             });
         }
+
     }
 }

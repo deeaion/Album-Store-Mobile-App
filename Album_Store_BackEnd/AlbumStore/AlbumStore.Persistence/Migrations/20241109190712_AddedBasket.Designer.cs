@@ -3,6 +3,7 @@ using System;
 using AlbumStore.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlbumStore.Persistence.Migrations
 {
     [DbContext(typeof(AlbumStoreDbContext))]
-    partial class AlbumStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241109190712_AddedBasket")]
+    partial class AddedBasket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

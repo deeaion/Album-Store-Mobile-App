@@ -2,7 +2,7 @@ using AlbumStore.Domain.Entities;
 using AlbumStore.Persistence.Seeders;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
- using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 namespace AlbumStore.Persistence;
 
 public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<ApplicationUser, Role, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>(options)
@@ -17,6 +17,8 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
     public DbSet<Band> Bands { get; set; }
     public DbSet<ProductVersion> ProductVersions { get; set; }
     public DbSet<ApplicationLog> ApplicationLogs { get; set; }
+    public DbSet<ProductBasket> ProductBaskets { get; set; }
+    public DbSet<UserBasket> UserBaskets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,9 +32,36 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
         ConfigureProductOrder(modelBuilder);
         ConfigureProductVersion(modelBuilder);
         ConfigureRole(modelBuilder);
+        ConfigureUserBasket(modelBuilder);
+        ConfigureProductBasket(modelBuilder);
         modelBuilder.SeedForRoles();
     }
 
+    private void ConfigureProductBasket(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ProductBasket>().HasKey(pb => new { pb.ProductId, pb.UserBasketId });
+        modelBuilder.Entity<ProductBasket>().HasOne(pb => pb.Product).WithMany().HasForeignKey(pb => pb.ProductId);
+        modelBuilder.Entity<ProductBasket>().HasOne(pb => pb.UserBasket).WithMany(ub => ub.ProductBaskets).HasForeignKey(pb => pb.UserBasketId);
+
+    }
+
+
+    private void ConfigureUserBasket(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserBasket>()
+            .HasKey(ub => ub.UserId); // Set UserId as the primary key
+
+        modelBuilder.Entity<UserBasket>()
+            .HasOne(ub => ub.User)
+            .WithOne(u => u.UserBasket)
+            .HasForeignKey<UserBasket>(ub => ub.UserId) // Set UserId as the foreign key
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<UserBasket>()
+            .HasMany(ub => ub.ProductBaskets)
+            .WithOne(pb => pb.UserBasket)
+            .HasForeignKey(pb => pb.UserBasketId);
+    }
 
 
     private static void ConfigureAddress(ModelBuilder builder)
@@ -57,6 +86,7 @@ public class AlbumStoreDbContext(DbContextOptions options) : IdentityDbContext<A
                 "UserFavoriteProduct",  // Custom join table name
 j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_UserFavoriteProduct_UserId"),
                 j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId").HasConstraintName("FK_UserFavoriteProduct_ProductId"));
+
     }
 
     private static void ConfigureUser(ModelBuilder builder)
@@ -83,6 +113,9 @@ j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").OnDelete(Del
                 "UserFavoriteBand",
                 j => j.HasOne<Band>().WithMany().HasForeignKey("BandId").HasConstraintName("FK_UserFavoriteBand_BandId"),
                 j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").HasConstraintName("FK_UserFavoriteBand_UserId"));
+        // configure user basket
+        builder.Entity<ApplicationUser>().HasOne(u => u.UserBasket).WithOne(ub => ub.User).HasForeignKey<UserBasket>(ub => ub.UserId).OnDelete(DeleteBehavior.Cascade);
+
     }
 
 
@@ -111,7 +144,7 @@ j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").OnDelete(Del
         builder.Entity<Artist>().HasMany(a => a.Bands).WithMany(b => b.Members);
     }
 
-   
+
 
     private static void ConfigureOrder(ModelBuilder builder)
     {
@@ -121,7 +154,7 @@ j => j.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId").OnDelete(Del
         builder.Entity<Order>().HasOne(o => o.User).WithMany(u => u.Orders).HasForeignKey(o => o.UserId);
         builder.Entity<Order>()
             .HasOne(o => o.Address)
-            .WithMany()                          
+            .WithMany()
             .HasForeignKey(o => o.AddressId)
             .OnDelete(DeleteBehavior.Restrict);
     }

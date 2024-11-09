@@ -19,9 +19,9 @@ export const useWebSocket = ({ url, token, userId = '', onMessage }: SignalROpti
   const [connectionStatus, setConnectionStatus] = useState<'connected' | 'connecting' | 'disconnected' | 'offline' | 'reconnecting'>('disconnected');
   const reconnectAttempts = useRef(0);
   const keepAliveInterval = 50000;
-  const maxReconnectAttempts = 5;
+  const maxReconnectAttempts = 10;
   const minRetryDelay = 15000;
-  const maxRetryDelay = 60000;
+  const maxRetryDelay = 20000;
   const keepAliveRef = useRef<NodeJS.Timeout | null>(null);
   const lastMessageRef = useRef<string | null>(null);
   const isMounted = useRef(true);
