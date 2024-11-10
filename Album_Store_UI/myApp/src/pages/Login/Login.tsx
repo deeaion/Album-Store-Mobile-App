@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   IonButton,
   IonContent,
@@ -10,16 +10,17 @@ import {
   IonTitle,
   IonToolbar,
   useIonAlert,
-  IonSpinner
-} from '@ionic/react';
-import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../api/Auth/AuthProvider'; // Import AuthContext
-import './Login.css';
+  IonSpinner,
+} from "@ionic/react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../api/Auth/AuthProvider";
+import "./Login.css";
 
 export const Login: React.FC = () => {
-  const { login, isAuthenticating, authenticationError, isAuthenticated } = useContext(AuthContext); // Add isAuthenticated
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const { login, isAuthenticating, authenticationError, isAuthenticated } =
+    useContext(AuthContext); // Add isAuthenticated
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const history = useHistory();
   const [alert] = useIonAlert();
 
@@ -27,9 +28,9 @@ export const Login: React.FC = () => {
   useEffect(() => {
     if (authenticationError) {
       alert({
-        header: 'Login Failed',
+        header: "Login Failed",
         message: authenticationError,
-        buttons: ['OK'],
+        buttons: ["OK"],
       });
     }
   }, [authenticationError, alert]);
@@ -37,7 +38,7 @@ export const Login: React.FC = () => {
   // Redirect to home if login was successful
   useEffect(() => {
     if (isAuthenticated && !isAuthenticating) {
-      history.push('/'); // Redirect to home on successful login
+      history.push("/"); // Redirect to home on successful login
     }
   }, [isAuthenticated, isAuthenticating, history]);
 
@@ -77,10 +78,17 @@ export const Login: React.FC = () => {
           {isAuthenticating && <IonSpinner name="crescent" />}
 
           <div className="grid">
-            <IonButton onClick={() => handleLogin(false)} className="grid__item">
+            <IonButton
+              onClick={() => handleLogin(false)}
+              className="grid__item"
+            >
               Login
             </IonButton>
-            <IonButton color="secondary" onClick={() => handleLogin(true)} className="grid__item">
+            <IonButton
+              color="secondary"
+              onClick={() => handleLogin(true)}
+              className="grid__item"
+            >
               Login as Guest
             </IonButton>
           </div>

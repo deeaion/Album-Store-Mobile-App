@@ -1,0 +1,29 @@
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ion-padding {
+  padding-bottom: 20px;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ion-footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--ion-background-color);
+}

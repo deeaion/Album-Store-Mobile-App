@@ -5,5 +5,5 @@ namespace AlbumStore.Application.Commands.OrderCommands;
 
 public class CreateOrderCommand : BaseRequest<CommandResponse>
 {
-    public OrderDto Order { get; set; }
+    public string Address { get; set; }
 }

@@ -14,8 +14,8 @@ public class Order
     // link to product Order
     public virtual ICollection<ProductOrder>? ProductOrders { get; set; }
     //link to adress
-    public virtual Guid AddressId { get; set; }
-    public virtual Address Address { get; set; }
+    public virtual Guid? AddressId { get; set; }
+    public virtual Address? Address { get; set; }
     public string AddressShort { get; set; }
 
     public Order()

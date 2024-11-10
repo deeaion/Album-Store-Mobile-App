@@ -1,15 +1,19 @@
-// src/contexts/AuthProvider.tsx
-import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { login as loginAPI, AuthProps, LoginResult } from './authAPI';
-import { Preferences } from '@capacitor/preferences';
+import React, { useCallback, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { login as loginAPI, LoginResult, getCurrentUser } from "./authAPI";
+import { Preferences } from "@capacitor/preferences";
 
-type LoginFn = (email: string, password: string, isGuestLogin?: boolean) => Promise<void>;
+type LoginFn = (
+  email: string,
+  password: string,
+  isGuestLogin?: boolean
+) => Promise<void>;
 
 export interface AuthState {
   authenticationError: string | null;
   isAuthenticated: boolean;
-  isAuthenticating: boolean;
+  isAuthenticating?: boolean;
+  loading: boolean;
   login?: LoginFn;
   token: string;
   loginResult?: LoginResult;
@@ -17,9 +21,9 @@ export interface AuthState {
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  isAuthenticating: false,
+  loading: true,
   authenticationError: null,
-  token: '',
+  token: "",
   loginResult: undefined,
 };
 
@@ -30,59 +34,71 @@ interface AuthProviderProps {
 }
 
 const storeToken = async (token: string) => {
-  await Preferences.set({ key: 'authToken', value: token });
+  await Preferences.set({ key: "authToken", value: token });
 };
 
 const retrieveToken = async () => {
-  const { value } = await Preferences.get({ key: 'authToken' });
+  const { value } = await Preferences.get({ key: "authToken" });
   return value;
 };
 
 const clearToken = async () => {
-  await Preferences.remove({ key: 'authToken' });
+  await Preferences.remove({ key: "authToken" });
 };
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, setState] = useState<AuthState>(initialState);
-  const { isAuthenticated, isAuthenticating, authenticationError, token } = state;
 
-  const login = useCallback<LoginFn>(async (email, password, asGuest = false) => {
-    setState((prevState) => ({ ...prevState, isAuthenticating: true, authenticationError: null }));
-
-    try {
-      const response = await loginAPI(email, password, asGuest);
-      const token = response?.result?.token;
-      const loginResult = response?.result;
-
-      if (token) {
-        await storeToken(token); // Use Capacitor to store token
-        setState((prevState) => ({
-          ...prevState,
-          token,
-          isAuthenticated: true,
-          isAuthenticating: false,
-          loginResult,
-        }));
-      } else {
-        throw new Error('Login failed: No token received');
-      }
-    } catch (error) {
+  const login = useCallback<LoginFn>(
+    async (email, password, asGuest = false) => {
       setState((prevState) => ({
         ...prevState,
-        authenticationError: (error as Error).message,
-        isAuthenticating: false,
+        loading: true,
+        authenticationError: null,
       }));
-    }
-  }, []);
+      try {
+        const response = await loginAPI(email, password, asGuest);
+        const token = response?.result?.token;
+        const loginResult = response?.result;
+
+        if (token) {
+          await storeToken(token);
+          setState({
+            ...state,
+            token,
+            isAuthenticated: true,
+            loading: false,
+            loginResult,
+          });
+        } else {
+          throw new Error("Login failed: No token received");
+        }
+      } catch (error) {
+        setState((prevState) => ({
+          ...prevState,
+          authenticationError: (error as Error).message,
+          loading: false,
+        }));
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      const savedToken = await retrieveToken(); // Retrieve token from Preferences
+      const savedToken = await retrieveToken();
       if (savedToken) {
-        setState((prevState) => ({
-          ...prevState,
+        setState({
+          ...state,
           token: savedToken,
           isAuthenticated: true,
+          loading: false,
+        });
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          isAuthenticated: false,
+          loading: false,
         }));
       }
     };
@@ -91,11 +107,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = useCallback(async () => {
     await clearToken();
-    setState(initialState);
-    window.location.href = '/login';
+    setState({
+      ...initialState,
+      loading: false, // Explicitly set loading to false after logout
+    });
   }, []);
 
-  const value = { isAuthenticated, login, logout, isAuthenticating, authenticationError, token };
+  const value = { ...state, login, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

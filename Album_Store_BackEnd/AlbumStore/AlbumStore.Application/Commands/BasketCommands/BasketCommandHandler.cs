@@ -20,7 +20,7 @@ public class BasketCommandHandler(
 
         // Check if the UserBasket exists
         string userId = (await _userService.GetCurrentUser()).UserId;
-        UserBasket userBasket = await _userBasketRepository.Query()
+        UserBasket? userBasket = await _userBasketRepository.Query()
             .Include(ub => ub.ProductBaskets)
             .FirstOrDefaultAsync(ub => ub.UserId == userId);
 
@@ -36,10 +36,13 @@ public class BasketCommandHandler(
             await _userBasketRepository.SaveChangesAsync(cancellationToken);
         }
         //caut daca exista vreun produs in cos cu acelasi product id
-        ProductBasket productBasketExist = userBasket.ProductBaskets.FirstOrDefault(pb => pb.ProductId == request.ProductBasket.ProductId);
+        ProductBasket productBasketExist = userBasket.ProductBaskets
+            .FirstOrDefault(pb => pb.ProductId == request.ProductBasket.ProductId);
+
         if (productBasketExist != null)
         {
             productBasketExist.Quantity += request.ProductBasket.Quantity;
+            productBasketExist.Price += productBasketExist.Product.Price * request.ProductBasket.Quantity;
             await _userBasketRepository.SaveChangesAsync(cancellationToken);
             return CommandResponse.Ok();
         }
@@ -65,13 +68,14 @@ public class BasketCommandHandler(
     public async Task<CommandResponse> Handle(UpdateProductBasketCommand request, CancellationToken cancellationToken)
     {
         ProductBasket productBasket = await _productBasketRepository
-            .Query()
+            .Query().Include(p=>p.Product)
             .FirstOrDefaultAsync(pb => pb.Id.ToString() == request.Id);
         if (productBasket == null)
         {
             return CommandResponse.Failed(new[] { "There is no ProductBasket with that Id!" });
         }
         productBasket.Quantity = request.Quantity;
+        productBasket.Price = productBasket.Product.Price * request.Quantity;   
         await _productBasketRepository.SaveChangesAsync(cancellationToken);
         return CommandResponse.Ok(productBasket);
 

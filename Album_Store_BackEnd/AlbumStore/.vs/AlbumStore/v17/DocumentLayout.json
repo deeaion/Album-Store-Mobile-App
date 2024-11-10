@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|solutionrelative:albumstore.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\collectioncommands\\collectioncommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\collectioncommands\\collectioncommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.api\\controllers\\collectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|solutionrelative:albumstore.api\\controllers\\collectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\orderqueries\\orderqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\orderqueries\\orderqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\collectioncommands\\collectioncommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\collectioncommands\\collectioncommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\collectionqueries\\collectionqueriehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,40 +19,88 @@
       "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\collectionqueries\\collectionqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\collectioncommands\\collectioncommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\collectioncommands\\collectioncommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\orderqueries\\orderqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\orderqueries\\orderqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\collectioncommands\\collectioncommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\collectioncommands\\collectioncommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\orderqueries\\orderqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\orderqueries\\orderqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\ordercommands\\ordercommandshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\ordercommands\\ordercommandshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\ordercommands\\ordercommandvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\ordercommands\\ordercommandvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.api\\controllers\\collectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|solutionrelative:albumstore.api\\controllers\\collectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.domain\\entities\\collectionitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|solutionrelative:albumstore.domain\\entities\\collectionitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\productcommands\\productcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\productcommands\\productcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\models\\imagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\models\\imagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\productqueries\\productqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\productqueries\\productqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.domain\\entities\\image.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|solutionrelative:albumstore.domain\\entities\\image.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\productqueries\\productqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\productqueries\\productqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\models\\collectionitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\models\\collectionitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\basketcommands\\basketcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\basketcommands\\basketcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3863CE0E-CAC5-4723-880F-B4C4BF605E84}|AlbumStore.Api\\AlbumStore.Api.csproj|solutionrelative:albumstore.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.domain\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|solutionrelative:albumstore.domain\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\ordercommands\\ordercommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\ordercommands\\ordercommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A444829-5D0E-4F47-A23C-ED5CF7B2EDCB}|AlbumStore.Persistence\\AlbumStore.Persistence.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.persistence\\albumstoredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A444829-5D0E-4F47-A23C-ED5CF7B2EDCB}|AlbumStore.Persistence\\AlbumStore.Persistence.csproj|solutionrelative:albumstore.persistence\\albumstoredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\basketcommands\\basketcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\basketcommands\\basketcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.domain\\entities\\productorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6A9B9B0-E99C-4931-9AE4-C2197D174EE0}|AlbumStore.Domain\\AlbumStore.Domain.csproj|solutionrelative:albumstore.domain\\entities\\productorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\basketqueries\\basketqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\basketqueries\\basketqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\queries\\basketqueries\\basketqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\queries\\basketqueries\\basketqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\models\\productbasketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\models\\productbasketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\productcommands\\productcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\productcommands\\productcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\commands\\basketcommands\\basketcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\commands\\basketcommands\\basketcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.application\\models\\basketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4DC43879-EE7C-421F-95BA-75CFAC756E2D}|AlbumStore.Application\\AlbumStore.Application.csproj|solutionrelative:albumstore.application\\models\\basketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A444829-5D0E-4F47-A23C-ED5CF7B2EDCB}|AlbumStore.Persistence\\AlbumStore.Persistence.csproj|c:\\users\\deea\\desktop\\uni\\github\\album-store-mobile-app\\album_store_backend\\albumstore\\albumstore.persistence\\migrations\\20241110151405_madeorderaddressnullable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A444829-5D0E-4F47-A23C-ED5CF7B2EDCB}|AlbumStore.Persistence\\AlbumStore.Persistence.csproj|solutionrelative:albumstore.persistence\\migrations\\20241110151405_madeorderaddressnullable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,11 +110,204 @@
       "DocumentGroups": [
         {
           "DockedWidth": 83,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 21,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "OrderQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\OrderQueries\\OrderQueryHandler.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\OrderQueries\\OrderQueryHandler.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\OrderQueries\\OrderQueryHandler.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Queries\\OrderQueries\\OrderQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T16:39:09.64Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ImageDto.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\ImageDto.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Models\\ImageDto.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\ImageDto.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Models\\ImageDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T16:33:35.62Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Image.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\Image.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Domain\\Entities\\Image.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\Image.cs",
+              "RelativeToolTip": "AlbumStore.Domain\\Entities\\Image.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T16:32:03.93Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CollectionItemDto.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\CollectionItemDto.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Models\\CollectionItemDto.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\CollectionItemDto.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Models\\CollectionItemDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T16:23:31.964Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CollectionItem.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\CollectionItem.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Domain\\Entities\\CollectionItem.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\CollectionItem.cs",
+              "RelativeToolTip": "AlbumStore.Domain\\Entities\\CollectionItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T15:24:51.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "20241110151405_MadeOrderAddressNullable.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Persistence\\Migrations\\20241110151405_MadeOrderAddressNullable.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Persistence\\Migrations\\20241110151405_MadeOrderAddressNullable.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Persistence\\Migrations\\20241110151405_MadeOrderAddressNullable.cs",
+              "RelativeToolTip": "AlbumStore.Persistence\\Migrations\\20241110151405_MadeOrderAddressNullable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T15:14:05.973Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "OrderCommands.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\OrderCommands\\OrderCommands.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\OrderCommands\\OrderCommands.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\OrderCommands\\OrderCommands.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Commands\\OrderCommands\\OrderCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:50:53.806Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "BasketQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\BasketQueries\\BasketQueryHandler.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\BasketQueries\\BasketQueryHandler.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\BasketQueries\\BasketQueryHandler.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Queries\\BasketQueries\\BasketQueryHandler.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAQwC4AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:46:06.463Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "BasketQueries.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\BasketQueries\\BasketQueries.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\BasketQueries\\BasketQueries.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\BasketQueries\\BasketQueries.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Queries\\BasketQueries\\BasketQueries.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:46:05.695Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "BasketCommands.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:41:37.848Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ProductBasketDto.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\ProductBasketDto.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Models\\ProductBasketDto.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\ProductBasketDto.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Models\\ProductBasketDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:41:16.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "BasketDto.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\BasketDto.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Models\\BasketDto.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\BasketDto.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Models\\BasketDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:41:12.644Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OrderCommandsHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandsHandler.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandsHandler.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandsHandler.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandsHandler.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAuwD8AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:23:24.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrderCommandValidator.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandValidator.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandValidator.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandValidator.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Commands\\OrderCommands\\OrderCommandValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T14:23:23.152Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AlbumStoreDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Persistence\\AlbumStoreDbContext.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Persistence\\AlbumStoreDbContext.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Persistence\\AlbumStoreDbContext.cs",
+              "RelativeToolTip": "AlbumStore.Persistence\\AlbumStoreDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T11:41:35.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "BasketCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\BasketCommands\\BasketCommandHandler.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\BasketCommands\\BasketCommandHandler.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\BasketCommands\\BasketCommandHandler.cs",
+              "RelativeToolTip": "AlbumStore.Application\\Commands\\BasketCommands\\BasketCommandHandler.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAIAwwCwAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T11:39:46.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "OrderQueries.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\OrderQueries\\OrderQueries.cs",
               "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\OrderQueries\\OrderQueries.cs",
@@ -78,51 +315,48 @@
               "RelativeToolTip": "AlbumStore.Application\\Queries\\OrderQueries\\OrderQueries.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T22:42:35.441Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T22:42:35.441Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 13,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Api\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "AlbumStore.Api\\Controllers\\OrderController.cs",
               "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Api\\Controllers\\OrderController.cs",
               "RelativeToolTip": "AlbumStore.Api\\Controllers\\OrderController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwB0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T22:36:54.194Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "CollectionController.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Api\\Controllers\\CollectionController.cs",
               "RelativeDocumentMoniker": "AlbumStore.Api\\Controllers\\CollectionController.cs",
               "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Api\\Controllers\\CollectionController.cs",
               "RelativeToolTip": "AlbumStore.Api\\Controllers\\CollectionController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T22:36:45.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T22:36:45.823Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "CollectionQuerieHandler.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQuerieHandler.cs",
               "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQuerieHandler.cs",
               "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQuerieHandler.cs",
               "RelativeToolTip": "AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQuerieHandler.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAmwBYAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAkwEQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T22:30:44.185Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T22:30:44.185Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "CollectionQueries.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQueries.cs",
               "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQueries.cs",
@@ -130,31 +364,30 @@
               "RelativeToolTip": "AlbumStore.Application\\Queries\\CollectionQueries\\CollectionQueries.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T22:30:34.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-09T22:30:34.03Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "CollectionCommandHandler.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommandHandler.cs",
               "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommandHandler.cs",
               "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommandHandler.cs",
               "RelativeToolTip": "AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommandHandler.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAA6wDcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAjwBUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T22:25:58.103Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "CollectionCommands.cs",
               "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommands.cs",
               "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommands.cs",
               "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommands.cs",
               "RelativeToolTip": "AlbumStore.Application\\Commands\\CollectionCommands\\CollectionCommands.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T22:25:05.711Z",
               "EditorCaption": ""
@@ -167,108 +400,42 @@
       "Orientation": 0,
       "VerticalTabListWidth": 256,
       "FloatingWindowState": {
-        "Id": "ce418b89-4ce5-4972-930e-205747dff15f",
-        "Display": 0,
-        "X": 133,
-        "Y": 349,
-        "Width": 1120,
-        "Height": 547,
+        "Id": "b3797f4c-075b-42da-a6f1-18a85d08599c",
+        "Display": 1,
+        "X": 1206,
+        "Y": 899,
+        "Width": 1359,
+        "Height": 497,
         "WindowState": 0
       },
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CollectionItem.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\CollectionItem.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Domain\\Entities\\CollectionItem.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\CollectionItem.cs",
-              "RelativeToolTip": "AlbumStore.Domain\\Entities\\CollectionItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 18,
+              "Title": "ProductOrder.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\ProductOrder.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Domain\\Entities\\ProductOrder.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\ProductOrder.cs",
+              "RelativeToolTip": "AlbumStore.Domain\\Entities\\ProductOrder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T22:13:20.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T14:57:15.998Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ProductQueryHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\ProductQueries\\ProductQueryHandler.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\ProductQueries\\ProductQueryHandler.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\ProductQueries\\ProductQueryHandler.cs",
-              "RelativeToolTip": "AlbumStore.Application\\Queries\\ProductQueries\\ProductQueryHandler.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 14,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\Order.cs",
+              "RelativeDocumentMoniker": "AlbumStore.Domain\\Entities\\Order.cs",
+              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Domain\\Entities\\Order.cs",
+              "RelativeToolTip": "AlbumStore.Domain\\Entities\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:49:43.907Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ProductQueries.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\ProductQueries\\ProductQueries.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Application\\Queries\\ProductQueries\\ProductQueries.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Queries\\ProductQueries\\ProductQueries.cs",
-              "RelativeToolTip": "AlbumStore.Application\\Queries\\ProductQueries\\ProductQueries.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:49:41.942Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ProductCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\ProductCommands\\ProductCommandHandler.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\ProductCommands\\ProductCommandHandler.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\ProductCommands\\ProductCommandHandler.cs",
-              "RelativeToolTip": "AlbumStore.Application\\Commands\\ProductCommands\\ProductCommandHandler.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAADAAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:47:03.925Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "BasketCommands.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
-              "RelativeToolTip": "AlbumStore.Application\\Commands\\BasketCommands\\BasketCommands.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:46:40.466Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ProductCommands.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\ProductCommands\\ProductCommands.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Application\\Commands\\ProductCommands\\ProductCommands.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Commands\\ProductCommands\\ProductCommands.cs",
-              "RelativeToolTip": "AlbumStore.Application\\Commands\\ProductCommands\\ProductCommands.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:46:32.081Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ProductBasketDto.cs",
-              "DocumentMoniker": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\ProductBasketDto.cs",
-              "RelativeDocumentMoniker": "AlbumStore.Application\\Models\\ProductBasketDto.cs",
-              "ToolTip": "C:\\Users\\Deea\\Desktop\\Uni\\github\\Album-Store-Mobile-App\\Album_Store_BackEnd\\AlbumStore\\AlbumStore.Application\\Models\\ProductBasketDto.cs",
-              "RelativeToolTip": "AlbumStore.Application\\Models\\ProductBasketDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:46:20.967Z",
+              "WhenOpened": "2024-11-10T14:57:08.166Z",
               "EditorCaption": ""
             }
           ]

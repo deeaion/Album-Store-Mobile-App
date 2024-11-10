@@ -1,5 +1,4 @@
-// src/hooks/usePreferences.ts
-import { Preferences } from '@capacitor/preferences';
+import { Preferences } from "@capacitor/preferences";
 
 export const usePreferences = () => {
   const setPreference = async (key: string, value: string) => {

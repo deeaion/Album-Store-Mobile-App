@@ -7,7 +7,7 @@ export type ProductListItem = {
   price: number;
   bandName: string;
   artistsNames: string;
-  Image: string; // Assuming a single image for listing
+  Image: string;
   isFavorited: boolean;
 };
 export type ProductVersion = {
@@ -17,7 +17,7 @@ export type ProductVersion = {
   imageUrl: string;
   price: number;
   productId: string;
-}
+};
 // Type for the full product details (more complex structure)
 export type ProductDetail = {
   id: string;
@@ -37,7 +37,6 @@ export type ProductDetail = {
   updatedAt?: Date;
   bandName?: string;
   isFavorited?: boolean;
-
 };
 
 // Response structure for getting all products
@@ -54,5 +53,5 @@ export type GetAllProductsFilter = Partial<{
   ArtistName: string;
   Genre: string;
   ArtistId: string;
-  BandName:string;
+  BandName: string;
 }>;

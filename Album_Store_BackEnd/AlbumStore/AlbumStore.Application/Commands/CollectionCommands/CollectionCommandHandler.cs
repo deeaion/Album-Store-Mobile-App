@@ -21,16 +21,24 @@ public class CollectionCommandHandler
     {
         string userId = (await _currentUserService.GetCurrentUser()).UserId;
         List<CollectionItem> collectionItems = await _collectionItemRepository.Query(c => c.UserId == userId).ToListAsync();
-        if (collectionItems.Any(c => c.ProductId == request.CollectionItem.ProductId))
+        if (request.CollectionItem.Id != Guid.Empty && collectionItems.Any(c => c.ProductId == request.CollectionItem.ProductId))
         {
             return CommandResponse.Failed(new[] { "This product is already in your collection!" });
         }
+        /*
+         * public string ImageBase64 { get; set; }     // Base64-encoded image data
+           public string ContentType { get; set; }     // MIME type, e.g., "image/jpeg"
+           public string FileName { get; set; }        // Optional file name
+         */
+        Image image= new Image { Id=Guid.NewGuid(),Data = Convert.FromBase64String(request.CollectionItem.Image.ImageBase64), ContentType = request.CollectionItem.Image.ContentType, FileName = request.CollectionItem.Image.FileName };
+        _imageRepository.Add(image);
+        await _imageRepository.SaveChangesAsync(cancellationToken);
         CollectionItem collectionItem = new CollectionItem
         {
             Id = Guid.NewGuid(),
             UserId = userId,
             ProductId = request.CollectionItem.ProductId,
-            ImageId = request.CollectionItem.ImageId,
+            ImageId = image.Id,
             Title = request.CollectionItem.Title,
             Artist = request.CollectionItem.Artist
         };
@@ -39,8 +47,9 @@ public class CollectionCommandHandler
         if (user != null)
         {
             user.CollectionItems.Add(collectionItem);
-        }
+            }
         await _collectionItemRepository.SaveChangesAsync(cancellationToken);
+    
         await _userRepository.SaveChangesAsync(cancellationToken);
         return CommandResponse.Ok();
     }

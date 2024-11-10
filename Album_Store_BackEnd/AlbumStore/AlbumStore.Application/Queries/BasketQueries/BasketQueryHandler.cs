@@ -30,7 +30,8 @@ public class BasketQueryHandler(IRepository<UserBasket> _userBasketRespository,
             {
                 Id = pb.Id,
                 ProductId = pb.ProductId,
-                Quantity = pb.Quantity
+                Quantity = pb.Quantity,
+                Price = pb.Price
             }).ToList()
         };
         return basketDto;

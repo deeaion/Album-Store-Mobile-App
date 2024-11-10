@@ -10,43 +10,63 @@ public class OrderCommandsHandler(
     IRepository<Order> _orderRepository,
     IRepository<ApplicationUser> _userRepository,
     IRepository<Product> _productRepository,
-    ICurrentUserService _userService) :
+    ICurrentUserService _userService,
+    IRepository<UserBasket> _basketRepository,
+    IRepository<ProductBasket> _productBasketRepository) :
     IRequestHandler<CreateOrderCommand, CommandResponse>
 {
     public async Task<CommandResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        //get all the product ids from the dto
-        List<string> productOrders = request.Order.Products.Select(po => po.ProductId).ToList();
-        // get the products from the database
-        List<Product> products = await _productRepository.Query()
-            .Where(p => productOrders.Contains(p.Id.ToString()))
-            .ToListAsync(cancellationToken)
-            ;
-        // get the user who created the order
-        string userId = (await _userService.GetCurrentUser()).UserId;
-        ApplicationUser user = await _userRepository.Query()
+        string userId= (await _userService.GetCurrentUser()).UserId;
+        var user = await _userRepository.Query()
             .Include(u => u.UserBasket)
-            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
-        // create the order
-        Order order = new Order
+            .ThenInclude(ub => ub.ProductBaskets)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null || user.UserBasket == null || !user.UserBasket.ProductBaskets.Any())
+        {
+              return  CommandResponse.Failed(new [] { "The user does not have any products in the basket" });
+        }
+
+        var order = new Order
         {
             Id = Guid.NewGuid(),
             UserId = userId,
-            ProductOrders = products.Select(p => new ProductOrder
-            {
-                ProductId = p.Id,
-                Quantity = request.Order.Products.First(po => po.ProductId == p.Id.ToString()).Quantity
-            }).ToList(),
-            TotalPrice = products.Sum(p => p.Price),
-            AddressShort = request.Order.Address,
-            Status = Status.InProgress
+            AddressShort = request.Address,
+            ProductOrders = new List<ProductOrder>()
         };
-        // add the order to the user
-        user.Orders.Add(order);
-        // save the changes
+        _orderRepository.Add(order);
+        _orderRepository.SaveChangesAsync(cancellationToken);
+        //acum adaug produsele in order
+        foreach (var productBasket in user.UserBasket.ProductBaskets)
+        {
+            var product = await _productRepository.Query()
+                .FirstOrDefaultAsync(p => p.Id == productBasket.ProductId);
+
+            if (product == null)
+            {
+                return CommandResponse.Failed(new[] { "Product not found" });
+            }
+            var productOrder = new ProductOrder
+            {
+                ProductId = product.Id,
+                OrderId = order.Id,
+                Price = (decimal)productBasket.Price,
+                Quantity = productBasket.Quantity,
+            };
+
+            order.ProductOrders.Add(productOrder);
+        }
+
         await _orderRepository.SaveChangesAsync(cancellationToken);
+        foreach (var productBasket in user.UserBasket.ProductBaskets.ToList())
+        {
+            user.UserBasket.ProductBaskets.Remove(productBasket);
+            _productBasketRepository.Remove(productBasket);
+        }
+
+        await _basketRepository.SaveChangesAsync(cancellationToken);
+
         return CommandResponse.Ok();
-
-
     }
 }
