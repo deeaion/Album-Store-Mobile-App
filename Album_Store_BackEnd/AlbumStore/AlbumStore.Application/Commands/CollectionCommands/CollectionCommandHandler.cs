@@ -21,7 +21,7 @@ public class CollectionCommandHandler
     {
         string userId = (await _currentUserService.GetCurrentUser()).UserId;
         List<CollectionItem> collectionItems = await _collectionItemRepository.Query(c => c.UserId == userId).ToListAsync();
-        if (request.CollectionItem.Id != Guid.Empty && collectionItems.Any(c => c.ProductId == request.CollectionItem.ProductId))
+        if (request.CollectionItem.Id != Guid.Empty &&request.CollectionItem.ProductId!=null &&request.CollectionItem.ProductId!=Guid.Empty && collectionItems.Any(c => c.ProductId == request.CollectionItem.ProductId))
         {
             return CommandResponse.Failed(new[] { "This product is already in your collection!" });
         }

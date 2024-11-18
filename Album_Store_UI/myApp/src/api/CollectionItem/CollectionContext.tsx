@@ -174,6 +174,7 @@ export const CollectionProvider: React.FC<CollectionProviderProps> = ({
 
       dispatch({ type: SAVE_COLLECTION_STARTED });
       try {
+        console.log({ collectionItem: item });
         const savedItem = await createCollectionItem({ collectionItem: item });
         dispatch({
           type: SAVE_COLLECTION_SUCCEEDED,

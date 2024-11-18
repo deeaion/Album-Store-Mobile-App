@@ -42,7 +42,9 @@ const AddCollectionItemModal: React.FC<AddCollectionItemModalProps> = ({
   const [selectedProductId, setSelectedProductId] = useState<
     string | undefined
   >(undefined);
+  const [loading, setLoading] = useState(false);
   const modalRef = useRef<HTMLIonContentElement>(null);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -62,6 +64,7 @@ const AddCollectionItemModal: React.FC<AddCollectionItemModalProps> = ({
     };
     fetchBands();
   }, []);
+
   useEffect(() => {
     if (modalRef.current) {
       const animation = createAnimation()
@@ -104,20 +107,36 @@ const AddCollectionItemModal: React.FC<AddCollectionItemModalProps> = ({
   };
 
   const handleSaveItem = async () => {
-    if (title && artist && photo) {
-      const collectionItem = {
-        productId: selectedProductId || undefined,
-        imageId: undefined,
+    if (title && artist && photo && saveCollectionItem) {
+      setLoading(true);
+      console.log(selectedBandId);
+      const collectionItem: any = {
         title,
         artist,
         image: {
-          imageBase64: photo.split(",")[1],
+          imageBase64: photo.split(",")[1], // Remove the data URL prefix
           contentType: "image/jpeg",
           fileName: `${Date.now()}.jpeg`,
         },
       };
-      await saveCollectionItem?.(collectionItem);
-      onClose();
+
+      if (selectedProductId !== undefined || selectedProductId != "None") {
+        collectionItem.productId = selectedProductId;
+      }
+      console.log("Attempting to save collection item:", collectionItem);
+
+      try {
+        await saveCollectionItem(collectionItem);
+        console.log("Item saved successfully:", collectionItem);
+        onClose(); // Close modal after saving
+      } catch (error) {
+        console.error("Error saving collection item:", error);
+        alert("Failed to save the item. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      console.log("Save function or required fields are missing");
     }
   };
 
@@ -199,10 +218,10 @@ const AddCollectionItemModal: React.FC<AddCollectionItemModalProps> = ({
           expand="block"
           color="primary"
           onClick={handleSaveItem}
-          disabled={!photo}
+          disabled={!photo || loading}
           className="save-button fade-in"
         >
-          Save Item
+          {loading ? "Saving..." : "Save Item"}
         </IonButton>
       </IonFooter>
     </IonContent>
